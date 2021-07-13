@@ -41,9 +41,8 @@ export const logoutUser = (email) => {
 
 export const redirectUser = (ctx, location) => {
 	if (ctx.req) {
-		// ctx.res.writeHead(302, { Location: location });
-		// ctx.res.end();
-		// console.log(location);
+		ctx.res.writeHead(302, { Location: location });
+		ctx.res.end();
 	} else {
 		Router.push(location);
 	}
@@ -52,4 +51,4 @@ export const redirectUser = (ctx, location) => {
 const setToken = (token) => {
 	cookie.set("token", token);
 	Router.push("/");
-}
+};
