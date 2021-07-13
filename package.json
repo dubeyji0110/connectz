@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon server",
     "build": "next build",
-    "start": "node server"
+    "start": "NODE_ENV=production node server"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
