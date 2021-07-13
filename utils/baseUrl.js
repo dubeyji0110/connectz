@@ -1,3 +1,3 @@
-const baseUrl ="https://connectz.vercel.app/";
+const baseUrl ="https://connectz.vercel.app";
 
 export default baseUrl;
