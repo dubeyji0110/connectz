@@ -65,7 +65,7 @@ function SearchComponent() {
 				onSearchChange={handleChange}
 				resultRenderer={ResultRenderer}
 				onResultSelect={(e, data) =>
-					Router.push(`/${data.result.username}`)
+					Router.push(`/user/${data.result.username}`)
 				}
 			/>
 		</>
