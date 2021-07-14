@@ -1,5 +1,6 @@
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
+import "cropperjs/dist/cropper.css";
 import { parseCookies, destroyCookie } from "nookies";
 import nProgress from "nprogress";
 import Router from "next/router";

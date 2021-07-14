@@ -160,7 +160,17 @@ path:active {
 .loginmargin {
 	margin-top: 172px !important;
 }
-@media only screen and (max-width: 900px) {
+._dropDiv {
+	min-width: 100%;
+	aspect-ratio: 1;
+	background: #f1f1f1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);
+	border: 2px dotted black;
+}
+@media only screen and (max-width: 800px) {
 	.responsive_signup {
 		flex-direction: column;
 	}
@@ -339,7 +349,7 @@ path:active {
 }
 .lower_ryt {
 	flex: 5;
-	justify-content: space-around;
+	justify-content: space-between;
 	display: flex;
 	flex-direction: column;
 }
@@ -350,8 +360,7 @@ path:active {
 }
 .btnPostSubmit {
 	padding: 12px 25px;
-	margin-left: auto;
-	border-radius: 20px;
+	border-radius: 8px;
 	background: var(--secondary-blue);
 	color: var(--primary-text-light);
 	font-weight: 600;
@@ -364,6 +373,9 @@ path:active {
 }
 .btnPostSubmit:active {
 	transform: scale(0.97);
+}
+.sp {
+	padding: 10px 12px;
 }
 
 /* cardpost styling */
@@ -483,6 +495,20 @@ button.ui.blue.icon {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+._cropModal {
+	display: flex;
+}
+@media only screen and (max-width: 991px) {
+	.sp {
+		padding: 10px;
+	}
+	.sp_ {
+		padding: 10px 20px;
+	}
+	._cropModal {
+		flex-direction: column;
+	}
 }
 @media only screen and (max-width: 800px) {
 	.post_modal {

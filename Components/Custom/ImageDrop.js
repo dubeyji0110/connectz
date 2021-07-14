@@ -5,22 +5,12 @@ import { Form, Header, Image } from "semantic-ui-react";
 function ImageDrop({ imgPreview, setImgPreview, setMedia, handleChange }) {
 	const fileRef = useRef();
 
-	const placeholderDivStyles = {
-		height: "250px",
-		minWidth: "100%",
-		minHeight: "100%",
-		background: "#f1f1f1",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		boxShadow: "0 1px 2px 0 rgb(34 36 38 / 15%)",
-		border: "2px dotted black",
-	};
-
 	return (
-		<Form.Field style={{ flex: "1" }} className='imgDropResponsive'>
+		<Form.Field
+			style={{ flex: "1", display: "flex", alignItems: "center" }}
+			className='imgDropResponsive'>
 			<div
-				style={placeholderDivStyles}
+				className='_dropDiv'
 				onDragOver={(e) => {
 					e.preventDefault();
 				}}
@@ -61,7 +51,11 @@ function ImageDrop({ imgPreview, setImgPreview, setMedia, handleChange }) {
 						src={imgPreview}
 						size='medium'
 						centered
-						style={{ cursor: "pointer" }}
+						style={{
+							cursor: "pointer",
+							width: "90%",
+							height: "90%",
+						}}
 						onClick={() => fileRef.current.click()}
 					/>
 				)}
