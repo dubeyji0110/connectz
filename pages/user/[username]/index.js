@@ -115,6 +115,7 @@ function ProfilePage({
 							))
 						) : (
 							<Image
+								alt='No Post Yet'
 								src='/NoPost.jpeg'
 								style={{
 									filter: "contrast(1.5)",
