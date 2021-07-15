@@ -216,6 +216,7 @@ path:active {
 	padding: 20px;
 	text-align: center;
 }
+
 /* sidebar styling */
 .sidebarLink {
 	cursor: pointer;
@@ -256,6 +257,23 @@ path:active {
 }
 .linkWrapper {
 	padding: 20px;
+}
+.ui.search > .results {
+	width: 15rem !important;
+	max-height: 35vh;
+	overflow: auto;
+}
+.ui.search > .results::-webkit-scrollbar {
+	display: block;
+	width: 0.3rem;
+}
+.ui.search > .results::-webkit-scrollbar-thumb {
+	background: var(--secondary-text-dark);
+	border-radius: 2rem;
+}
+.ui.search > .results::-webkit-scrollbar-track {
+	opacity: 0.5 !important;
+	border-radius: 2rem;
 }
 #cross {
 	position: absolute;

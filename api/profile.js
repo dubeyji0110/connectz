@@ -146,4 +146,45 @@ router.get("/following/:userId", authenticate, async (req, res) => {
 	}
 });
 
+// to update user profile
+router.post("/update", authenticate, async (req, res) => {
+	try {
+		const { userId } = req;
+		const {
+			bio,
+			github,
+			twitter,
+			instagram,
+			website,
+			profilePicUrl,
+			cloudinaryId,
+		} = req.body;
+		let profile = {};
+		profile.user = userId;
+		profile.bio = bio;
+		profile.social = {};
+		if (twitter) profile.social.twitter = twitter;
+		if (instagram) profile.social.instagram = instagram;
+		if (github) profile.social.github = github;
+		if (website) profile.social.website = website;
+		await Profile.findOneAndUpdate(
+			{ user: userId },
+			{ $set: profile },
+			{ new: true }
+		);
+		if (profilePicUrl) {
+			const user = await User.findById(userId);
+			user.cloudinaryId &&
+				(await cloudinary.uploader.destroy(user.cloudinaryId));
+			user.profilePicUrl = profilePicUrl;
+			user.cloudinaryId = cloudinaryId;
+			await user.save();
+		}
+		return res.status(200).send("Profile Updated");
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send("Internal Server Error");
+	}
+});
+
 module.exports = router;

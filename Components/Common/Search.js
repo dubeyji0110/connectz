@@ -41,6 +41,7 @@ function SearchComponent() {
 
 	useEffect(() => {
 		if (text.length === 0 && loading) setLoading(false);
+		text.trim().length === 0 && setResults([]);
 	}, [text]);
 
 	return (
@@ -74,9 +75,20 @@ function SearchComponent() {
 
 const ResultRenderer = ({ _id, name, profilePicUrl }) => {
 	return (
-		<div key={_id}>
-			<Image src={profilePicUrl} avatar rounded alt='ProfilePic' />
+		<div
+			key={_id}
+			style={{
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "space-between",
+			}}>
 			<h2 style={{ fontSize: "1rem" }}>{name}</h2>
+			<Image
+				src={profilePicUrl}
+				avatar
+				alt='ProfilePic'
+				style={{ width: "2rem", height: "2rem" }}
+			/>
 		</div>
 	);
 };

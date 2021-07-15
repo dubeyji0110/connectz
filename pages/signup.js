@@ -67,6 +67,7 @@ function SignUp() {
 			return setErrMsg("Error Uploading Image");
 		}
 		await registerUser(user, profilePicUrl, cloudinaryId, setErrMsg);
+		URL.revokeObjectURL(imgPreview);
 		setFormLoading(false);
 	};
 

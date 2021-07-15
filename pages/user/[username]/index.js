@@ -15,6 +15,7 @@ import catchErrors from "../../../utils/catchError";
 import Followers from "../../../Components/Profile/Followers";
 import Following from "../../../Components/Profile/Following";
 import Settings from "../../../Components/Profile/Settings";
+import UpdateProfile from "../../../Components/Profile/UpdateProfile";
 
 function ProfilePage({
 	user,
@@ -144,7 +145,13 @@ function ProfilePage({
 						setErrorMsg={setErrorMsg}
 					/>
 				)}
-				{owner && activeTab === "update_profile" && <p>update</p>}
+				{owner && activeTab === "update_profile" && (
+					<UpdateProfile
+						Profile={profile}
+						setErrorMsg={setErrorMsg}
+						setShowToaster={setShowToaster}
+					/>
+				)}
 				{owner && activeTab === "settings" && <Settings />}
 			</div>
 		</>

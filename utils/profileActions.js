@@ -44,3 +44,31 @@ export const unFollowUser = async (
 		setErrorMsg(catchErrors(error));
 	}
 };
+
+// to update user profile
+export const profileUpdate = async (
+	profile,
+	setLoading,
+	setErrorMsg,
+	profilePicUrl,
+	cloudinaryId
+) => {
+	try {
+		setLoading(true);
+		const { bio, github, twitter, instagram, website } = profile;
+		await Axios.post("/update", {
+			bio,
+			github,
+			twitter,
+			instagram,
+			website,
+			profilePicUrl,
+			cloudinaryId,
+		});
+		setLoading(false);
+		Router.reload();
+	} catch (error) {
+		setLoading(false);
+		setErrorMsg(catchErrors(error));
+	}
+};
