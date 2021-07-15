@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Form, Button, Divider } from "semantic-ui-react";
 import { profileUpdate } from "../../utils/profileActions";
 import uploadPic from "../../utils/uploadPicToCloudinary";

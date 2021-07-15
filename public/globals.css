@@ -337,7 +337,7 @@ path:active {
 		font-size: 1.7rem !important;
 	}
 	.main_more {
-		position: absolute;
+		position: fixed;
 		padding-top: 60px;
 		transition: all 0.5s ease-in-out !important;
 		top: 0;

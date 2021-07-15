@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Search, Image } from "semantic-ui-react";
 import { CloseRounded } from "@material-ui/icons";
+import { useRouter } from "next/router";
 import axios from "axios";
 import cookie from "js-cookie";
 import Router from "next/router";
@@ -12,6 +13,7 @@ function SearchComponent() {
 	const [text, setText] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [results, setResults] = useState([]);
+	const router = useRouter();
 
 	const handleChange = async (e) => {
 		setLoading(true);
@@ -43,6 +45,10 @@ function SearchComponent() {
 		if (text.length === 0 && loading) setLoading(false);
 		text.trim().length === 0 && setResults([]);
 	}, [text]);
+
+	useEffect(() => {
+		document.getElementById("searchbar").classList.remove("visible");
+	}, [router]);
 
 	return (
 		<>
