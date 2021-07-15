@@ -10,7 +10,10 @@ export const NoFeed = () => (
 			flexDirection: "column",
 			height: "50%",
 		}}>
-		<Image src='/noFeed.jpeg' style={{ filter: "contrast(1.5)" }} />
+		<Image
+			src='https://res.cloudinary.com/dyekojods/image/upload/v1626336592/noFeed_oo9n6b.jpg'
+			style={{ filter: "contrast(1.5)" }}
+		/>
 		<div style={{ marginTop: "1rem" }}>
 			<h4 style={{ fontWeight: "400" }}>Make Sure you follow someone.</h4>
 		</div>

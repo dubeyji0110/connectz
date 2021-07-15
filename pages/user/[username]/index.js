@@ -116,7 +116,7 @@ function ProfilePage({
 						) : (
 							<Image
 								alt='No Post Yet'
-								src='/NoPost.jpeg'
+								src='https://res.cloudinary.com/dyekojods/image/upload/v1626336593/noPost_vhvsrh.jpg'
 								style={{
 									filter: "contrast(1.5)",
 									transform: "scale(0.7)",

@@ -35,7 +35,10 @@ export const EndMessage = () => (
 			document.querySelector(".main_container").scrollTop = 0;
 		}}
 		style={{ margin: "1rem 0", cursor: "pointer" }}>
-		<Image style={{ margin: "auto" }} src='/feedEnd.jpg' />
+		<Image
+			style={{ margin: "auto" }}
+			src='https://res.cloudinary.com/dyekojods/image/upload/v1626336592/feedEnd_blsqlm.jpg'
+		/>
 	</div>
 );
 
