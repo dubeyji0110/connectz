@@ -84,11 +84,7 @@ function ProfilePage({
 			{errorMsg && <ErrorToastr error={errorMsg} />}
 			{showToaster.show && <SuccessToastr msg={showToaster.msg} />}
 			<div className='profile_wrapper'>
-				<MenuTabs
-					active={activeTab}
-					setActiveTab={setActiveTab}
-					owner={owner}
-				/>
+				<MenuTabs active={activeTab} owner={owner} />
 				{activeTab === "profile" && (
 					<>
 						<Profile
@@ -152,7 +148,13 @@ function ProfilePage({
 						setShowToaster={setShowToaster}
 					/>
 				)}
-				{owner && activeTab === "settings" && <Settings />}
+				{owner && activeTab === "settings" && (
+					<Settings
+						newMessagePopup={user.newMessagePopup}
+						setErrorMsg={setErrorMsg}
+						setShowToaster={setShowToaster}
+					/>
+				)}
 			</div>
 		</>
 	);

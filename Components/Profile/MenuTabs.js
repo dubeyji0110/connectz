@@ -1,13 +1,10 @@
 import { useRouter } from "next/router";
 import { ArrowBackRounded } from "@material-ui/icons";
 
-function MenuTabs({ active, owner, setActiveTab }) {
+function MenuTabs({ active, owner }) {
 	const router = useRouter();
 
-	const setTab = (tab) => {
-		// setActiveTab()
-		router.push(`?tab=${tab}`);
-	};
+	const setTab = (tab) => router.push(`?tab=${tab}`);
 
 	return (
 		<div className='tabs_wrapper'>

@@ -187,4 +187,37 @@ router.post("/update", authenticate, async (req, res) => {
 	}
 });
 
+// to update password
+router.post("/settings/password", authenticate, async (req, res) => {
+	try {
+		const { newPassword, currentPassword } = req.body;
+		if (newPassword.length < 6)
+			return res
+				.status(401)
+				.send("Password must be atleast 6 characters");
+		const user = await User.findById(req.userId).select("+password");
+		if (!(await bcrypt.compare(currentPassword, user.password)))
+			return res.status(401).send("Invalid Password");
+		user.password = await bcrypt.hash(newPassword, 10);
+		await user.save();
+		return res.status(200).send("Password Updated");
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send("Internal Server Error");
+	}
+});
+
+// update message popup
+router.post("/settings/messagePopup", authenticate, async (req, res) => {
+	try {
+		const user = await User.findById(req.userId);
+		user.newMessagePopup = !user.newMessagePopup;
+		await user.save();
+		return res.status(200).send("Setting Updated");
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send("Internal Server Error");
+	}
+});
+
 module.exports = router;
