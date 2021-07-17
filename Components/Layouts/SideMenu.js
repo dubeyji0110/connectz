@@ -31,20 +31,20 @@ function SideMenu({
 				active={Router.pathname === "/messages"}
 			/>
 			<ListItem
-				name='Account'
-				Icon={<AccountCircleOutlined />}
-				className='small-hidden'
-				link={`/user/${username}`}
-				active={
-					"/user/" + Router.query.username === `/user/${username}`
-				}
-			/>
-			<ListItem
 				name='Notifications'
 				Icon={<NotificationsOutlined />}
 				link='/notifications'
 				newUpdate={unreadNotification}
 				active={Router.pathname === "/notifications"}
+			/>
+			<ListItem
+				name='Account'
+				Icon={<AccountCircleOutlined />}
+				className='small-hidden'
+				link={`/user/${username}?tab=profile`}
+				active={
+					"/user/" + Router.query.username === `/user/${username}`
+				}
 			/>
 			<ListItem
 				name='Logout'
@@ -73,10 +73,22 @@ function SideMenu({
 							padding: "0.8rem 0",
 							borderBottom: "1px solid rgba(0,0,0,0.09)",
 						}}
-						active={Router.pathname === `/user/${username}`}
-						onClick={() => Router.push(`/user/${username}`)}>
+						onClick={() =>
+							Router.push(`/user/${username}?tab=profile`)
+						}>
 						<Icon name='user circle outline' />
 						<strong>Account</strong>
+					</Dropdown.Item>
+					<Dropdown.Item
+						style={{
+							padding: "0.8rem 0",
+							borderBottom: "1px solid rgba(0,0,0,0.09)",
+						}}
+						onClick={() =>
+							Router.push(`/user/${username}?tab=settings`)
+						}>
+						<Icon name='setting' />
+						<strong>Settings</strong>
 					</Dropdown.Item>
 					<Dropdown.Item
 						style={{ padding: "0.8rem 1rem" }}
