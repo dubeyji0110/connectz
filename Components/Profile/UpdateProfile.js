@@ -107,7 +107,7 @@ function UpdateProfile({ Profile, setErrorMsg, setShowToaster }) {
 					}}>
 					{imgPreview !== null && (
 						<Button
-							size='small'
+							size='mini'
 							type='button'
 							color='green'
 							content='Crop Image'
@@ -116,7 +116,7 @@ function UpdateProfile({ Profile, setErrorMsg, setShowToaster }) {
 						/>
 					)}
 					<Button
-						size='small'
+						size='mini'
 						type='button'
 						content='Add Social Links'
 						icon='at'
@@ -124,7 +124,7 @@ function UpdateProfile({ Profile, setErrorMsg, setShowToaster }) {
 						className='btn-social'
 					/>
 					<Button
-						size='small'
+						size='mini'
 						color='green'
 						disabled={profile.bio === "" || loading}
 						icon='pencil alternate'

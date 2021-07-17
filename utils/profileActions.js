@@ -72,3 +72,32 @@ export const profileUpdate = async (
 		setErrorMsg(catchErrors(error));
 	}
 };
+
+// to update password
+export const passwordUpdate = async (setShowToastr, passwords, setErrorMsg) => {
+	try {
+		const { currentPassword, newPassword } = passwords;
+		await Axios.post("/settings/password", {
+			currentPassword,
+			newPassword,
+		});
+		setShowToastr({ show: true, msg: "Password Updated!" });
+	} catch (error) {
+		setErrorMsg(catchErrors(error));
+	}
+};
+
+export const toggleMessagePopup = async (
+	popup,
+	setPopup,
+	setShowToastr,
+	setErrorMsg
+) => {
+	try {
+		await Axios.post("/settings/messagePopup");
+		setPopup(!popup);
+		setShowToastr({ show: true, msg: "Setting updated!" });
+	} catch (error) {
+		setErrorMsg(catchErrors(error));
+	}
+};

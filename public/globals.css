@@ -582,7 +582,7 @@ button.ui.blue.icon {
 	color: initial;
 }
 .mySpinner {
-	border: 5px solid var(--secondary-blue);
+	border: 5px solid #68c7ff;
 	border-top: 5px solid var(--primary-blue);
 	border-radius: 50%;
 	width: 2rem;

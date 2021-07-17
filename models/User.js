@@ -34,6 +34,24 @@ const UserSchema = new Schema(
 			default: "user",
 			enum: ["user", "root"],
 		},
+		newMessagePopup: {
+			type: Boolean,
+			default: true,
+		},
+		unreadMessage: {
+			type: Boolean,
+			default: false,
+		},
+		unreadNotification: {
+			type: Boolean,
+			default: false,
+		},
+		resetToken: {
+			type: String,
+		},
+		expireToken: {
+			type: Date,
+		},
 	},
 	{ timestamps: true }
 );
