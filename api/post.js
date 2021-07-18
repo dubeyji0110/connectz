@@ -5,6 +5,12 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const Follower = require("../models/Follower");
 const cloudinary = require("../utils/cloudinaryInstance");
+const {
+	notifyNewLike,
+	notifyNewComment,
+	removeNewLike,
+	removeNewComment,
+} = require("../server/notificationActions");
 const router = express.Router();
 
 // to create a post
@@ -146,6 +152,8 @@ router.post("/like/:postId", authenticate, async (req, res) => {
 			return res.status(401).send("Post Already Liked");
 		await post.likes.unshift({ user: userId });
 		await post.save();
+		if (post.user.toString() !== userId)
+			await notifyNewLike(userId, postId, post.user.toString());
 		return res.status(200).send("Post Liked");
 	} catch (error) {
 		console.error(error);
@@ -170,6 +178,8 @@ router.put("/unlike/:postId", authenticate, async (req, res) => {
 			.indexOf(userId);
 		await post.likes.splice(idx, 1);
 		await post.save();
+		if (post.user.toString() !== userId)
+			await removeNewLike(userId, postId, post.user.toString());
 		return res.status(200).send("Post Unliked");
 	} catch (error) {
 		console.error(error);
@@ -208,6 +218,14 @@ router.post("/comment/:postId", authenticate, async (req, res) => {
 		};
 		await post.comments.unshift(newComment);
 		await post.save();
+		if (post.user.toString() !== userId)
+			await notifyNewComment(
+				postId,
+				newComment._id,
+				userId,
+				post.user.toString(),
+				text
+			);
 		return res.status(200).json(newComment._id);
 	} catch (error) {
 		console.error(error);
@@ -216,10 +234,12 @@ router.post("/comment/:postId", authenticate, async (req, res) => {
 });
 
 // to delete a comment
-const deleteComment = async (post, commentId) => {
+const deleteComment = async (post, commentId, postId, userId) => {
 	const idx = post.comments.map((comment) => comment._id).indexOf(commentId);
 	await post.comments.splice(idx, 1);
 	await post.save();
+	if (post.user.toString() !== userId)
+		await removeNewComment(postId, commentId, userId, post.user.toString());
 };
 
 router.delete("/:postId/:commentId", authenticate, async (req, res) => {
@@ -234,9 +254,10 @@ router.delete("/:postId/:commentId", authenticate, async (req, res) => {
 		if (!comment) return res.status(404).send("Comment Not Found");
 		const user = await User.findById(userId);
 		if (comment.user.toString() !== userId) {
-			if (user.role === "root") await deleteComment(post, commentId);
+			if (user.role === "root")
+				await deleteComment(post, commentId, postId, userId);
 			else return res.status(401).send("Unauthorized");
-		} else await deleteComment(post, commentId);
+		} else await deleteComment(post, commentId, postId, userId);
 		return res.status(200).send("Comment Deleted!");
 	} catch (error) {
 		console.error(error);

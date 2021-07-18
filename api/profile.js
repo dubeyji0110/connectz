@@ -6,6 +6,10 @@ const Profile = require("../models/Profile");
 const Follower = require("../models/Follower");
 const Post = require("../models/Post");
 const cloudinary = require("../utils/cloudinaryInstance");
+const {
+	notifyNewFollower,
+	removeNewFollower,
+} = require("../server/notificationActions");
 const router = express.Router();
 
 // to get a user profile
@@ -70,6 +74,7 @@ router.post("/follow/:userToFollowId", authenticate, async (req, res) => {
 		await userToFollow.followers.unshift({ user: userId });
 		await user.save();
 		await userToFollow.save();
+		await notifyNewFollower(userId, userToFollowId);
 		return res
 			.status(200)
 			.send(`You followed ${userToFollow.user.username}`);
@@ -109,6 +114,7 @@ router.put("/unfollow/:userToUnfollowId", authenticate, async (req, res) => {
 		await userToUnfollow.followers.splice(idx2, 1);
 		await user.save();
 		await userToUnfollow.save();
+		await removeNewFollower(userId, userToUnfollowId);
 		return res
 			.status(200)
 			.send(`You Unfollowed ${userToUnfollow.user.username}`);
