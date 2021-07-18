@@ -158,6 +158,13 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 								);
 							}
 						}}>
+						<div
+							style={{
+								position: "absolute",
+								width: "100%",
+								height: "100%",
+								zIndex: "1",
+							}}></div>
 						{liked && (
 							<FavoriteRounded
 								style={{
@@ -171,7 +178,7 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 									margin: "auto",
 									width: "6rem",
 									height: "6rem",
-									zIndex: "1",
+									zIndex: "2",
 								}}
 							/>
 						)}
