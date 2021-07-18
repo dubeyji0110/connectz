@@ -5,6 +5,7 @@ const isEmail = require("validator/lib/isEmail");
 const authenticateUser = require("../middlewares/authenticate");
 const User = require("../models/User");
 const Follower = require("../models/Follower");
+const Notification = require("../models/Notification");
 
 const router = express.Router();
 
@@ -37,6 +38,14 @@ router.post("/", async (req, res) => {
 		if (!user) return res.status(401).send("Invalid Credentials");
 		const isPassword = await bcrypt.compare(password, user.password);
 		if (!isPassword) return res.status(401).send("Invalid Credentials");
+
+		// creating notification model for users
+		const notification = await Notification.findOne({ user: user._id });
+		if (!notification)
+			await new Notification({
+				user: user._id,
+				notifications: [],
+			}).save();
 
 		// setting token of user
 		const payload = { userId: user._id };

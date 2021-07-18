@@ -5,6 +5,7 @@ const isEmail = require("validator/lib/isEmail");
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const Follower = require("../models/Follower");
+const Notification = require("../models/Notification");
 
 const router = express.Router();
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
@@ -83,6 +84,12 @@ router.post("/", async (req, res) => {
 			user: user._id,
 			follower: [],
 			following: [],
+		}).save();
+
+		// creating notifications for user
+		await new Notification({
+			user: user._id,
+			notifications: [],
 		}).save();
 
 		// creating token for user

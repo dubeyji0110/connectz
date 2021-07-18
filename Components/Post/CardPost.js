@@ -169,7 +169,7 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 						{liked && (
 							<FavoriteRounded
 								style={{
-									color: "#efe1e19c",
+									color: "#efe1e1bc",
 									animation: "popup 200ms linear forwards",
 									position: "absolute",
 									top: "0",
