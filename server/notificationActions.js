@@ -29,6 +29,7 @@ const notifyNewLike = async (userId, postId, userToNotifyId) => {
 		};
 		await userToNotify.notifications.unshift(newNotification);
 		await userToNotify.save();
+		await setNotificationToUnread(userToNotifyId);
 		return;
 	} catch (error) {
 		console.error(error);
