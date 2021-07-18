@@ -32,23 +32,62 @@ router.post("/", authenticate, async (req, res) => {
 // to get all posts
 router.get("/", authenticate, async (req, res) => {
 	const pageNumber = Number(req.query.pageNumber);
+	const { userId } = req;
 	const size = 5;
 	try {
 		let posts;
+		const loggedUser = await Follower.findOne({ user: userId }).select(
+			"-followers"
+		);
 		if (pageNumber === 1) {
-			posts = await Post.find()
-				.limit(size)
-				.sort({ createdAt: -1 })
-				.populate("user")
-				.populate("comments.user");
+			if (loggedUser.following.length > 0) {
+				posts = await Post.find({
+					user: {
+						$in: [
+							userId,
+							...loggedUser.following.map(
+								(following) => following.user
+							),
+						],
+					},
+				})
+					.limit(size)
+					.sort({ createdAt: -1 })
+					.populate("user")
+					.populate("comments.user");
+			} else {
+				posts = await Post.find({ user: userId })
+					.limit(size)
+					.sort({ createdAt: -1 })
+					.populate("user")
+					.populate("comments.user");
+			}
 		} else {
 			const skips = size * (pageNumber - 1);
-			posts = await Post.find()
-				.skip(skips)
-				.limit(size)
-				.sort({ createdAt: -1 })
-				.populate("user")
-				.populate("comments.user");
+			if (loggedUser.following.length > 0) {
+				posts = await Post.find({
+					user: {
+						$in: [
+							userId,
+							...loggedUser.following.map(
+								(following) => following.user
+							),
+						],
+					},
+				})
+					.skip(skips)
+					.limit(size)
+					.sort({ createdAt: -1 })
+					.populate("user")
+					.populate("comments.user");
+			} else {
+				posts = await Post.find({ user: userId })
+					.skip(skips)
+					.limit(size)
+					.sort({ createdAt: -1 })
+					.populate("user")
+					.populate("comments.user");
+			}
 		}
 		return res.json(posts);
 	} catch (error) {
