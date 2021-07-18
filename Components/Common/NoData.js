@@ -8,14 +8,19 @@ export const NoFeed = () => (
 			display: "flex",
 			justifyContent: "center",
 			flexDirection: "column",
-			height: "50%",
+			height: "18.5rem",
 		}}>
 		<Image
 			src='https://res.cloudinary.com/dyekojods/image/upload/v1626336592/noFeed_oo9n6b.jpg'
-			style={{ filter: "contrast(1.5)" }}
+			style={{
+				filter: "contrast(1.5)",
+				width: "50%",
+				margin: "auto",
+				zIndex: "-1",
+			}}
 		/>
-		<div style={{ marginTop: "1rem" }}>
-			<h4 style={{ fontWeight: "400" }}>Make Sure you follow someone.</h4>
+		<div style={{ marginTop: "0.5rem" }}>
+			<h4 style={{ fontWeight: "500" }}>Make Sure you follow someone.</h4>
 		</div>
 	</div>
 );

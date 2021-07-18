@@ -23,6 +23,7 @@ import LikesList from "./LikesList";
 
 function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 	const [likes, setLikes] = useState(post.likes);
+	const [liked, setLiked] = useState(false);
 	const [comments, setComments] = useState(post.comments);
 	const [modal, showModal] = useState(false);
 
@@ -41,6 +42,10 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 		setErrorMsg,
 		setShowToaster,
 	};
+
+	useEffect(() => {
+		liked && setTimeout(() => setLiked(false), 800);
+	}, [liked]);
 
 	return (
 		<>
@@ -138,19 +143,38 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 				{post.picUrl && (
 					<div
 						className='post_img'
-						style={{ cursor: "pointer" }}
-						// ! review if you want a double click like (remove single click)
-						onClick={() => showModal(true)}
-						// onDoubleClick={() =>
-						// 	likePost(
-						// 		post._id,
-						// 		user._id,
-						// 		setLikes,
-						// 		setErrorMsg,
-						// 		!isLiked
-						// 	)
-						// }
-					>
+						style={{ cursor: "pointer", position: "relative" }}
+						// ! review if you want a single click modal (remove double click)
+						// onClick={() => showModal(true)}
+						onDoubleClick={async () => {
+							if (!isLiked) {
+								setLiked(true);
+								await likePost(
+									post._id,
+									user._id,
+									setLikes,
+									setErrorMsg,
+									!isLiked
+								);
+							}
+						}}>
+						{liked && (
+							<FavoriteRounded
+								style={{
+									color: "#efe1e173",
+									animation: "popup 200ms linear forwards",
+									position: "absolute",
+									top: "0",
+									left: "0",
+									bottom: "0",
+									right: "0",
+									margin: "auto",
+									width: "6rem",
+									height: "6rem",
+									zIndex: "1",
+								}}
+							/>
+						)}
 						<Image src={post.picUrl} />
 					</div>
 				)}

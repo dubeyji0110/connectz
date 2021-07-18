@@ -36,7 +36,7 @@ export const EndMessage = () => (
 		}}
 		style={{ margin: "1rem 0", cursor: "pointer" }}>
 		<Image
-			style={{ margin: "auto" }}
+			style={{ margin: "auto", width: "75%" }}
 			src='https://res.cloudinary.com/dyekojods/image/upload/v1626336592/feedEnd_blsqlm.jpg'
 		/>
 	</div>
