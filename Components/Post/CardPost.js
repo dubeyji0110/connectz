@@ -146,19 +146,20 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 						style={{ cursor: "pointer", position: "relative" }}
 						// ! review if you want a single click modal (remove double click)
 						// onClick={() => showModal(true)}
-						onDoubleClick={async () => {
-							if (!isLiked) {
-								setLiked(true);
-								await likePost(
-									post._id,
-									user._id,
-									setLikes,
-									setErrorMsg,
-									!isLiked
-								);
-							}
-						}}>
+					>
 						<div
+							onDoubleClick={async () => {
+								if (!isLiked) {
+									setLiked(true);
+									await likePost(
+										post._id,
+										user._id,
+										setLikes,
+										setErrorMsg,
+										!isLiked
+									);
+								}
+							}}
 							style={{
 								position: "absolute",
 								width: "100%",
@@ -168,7 +169,7 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 						{liked && (
 							<FavoriteRounded
 								style={{
-									color: "#efe1e173",
+									color: "#efe1e19c",
 									animation: "popup 200ms linear forwards",
 									position: "absolute",
 									top: "0",
