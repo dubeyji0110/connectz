@@ -5,13 +5,18 @@ const formatTime = (createdAt) => {
 	const today = moment(Date.now());
 	const postDate = moment(createdAt);
 	const diffInHrs = today.diff(postDate, "hours");
-	if (diffInHrs < 24) {
-		return (
-			<>
-				Today <Moment format='hh:mm A'>{createdAt}</Moment>
-			</>
-		);
-	} else if (diffInHrs > 24 && diffInHrs < 36) {
+	const diffInMins = today.diff(postDate, "minutes");
+	if (diffInMins < 1) {
+		return <>Just now</>;
+	} else if (diffInMins === 1) {
+		return <>a min ago</>;
+	} else if (diffInMins < 60) {
+		return <>{diffInMins} mins ago</>;
+	} else if (diffInMins > 60 && diffInHrs < 2) {
+		return <>an hour ago</>;
+	} else if (diffInMins > 60 && diffInHrs < 24) {
+		return <>{diffInHrs} hours ago</>;
+	} else if (diffInHrs >= 24 && diffInHrs < 36) {
 		return (
 			<>
 				Yesterday <Moment format='hh:mm A'>{createdAt}</Moment>
