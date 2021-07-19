@@ -8,7 +8,6 @@ import baseUrl from "../../../utils/baseUrl";
 import { ErrorToastr, SuccessToastr } from "../../../Components/Common/Toaster";
 import MenuTabs from "../../../Components/Profile/MenuTabs";
 import Profile from "../../../Components/Profile/Profile";
-import ErrorPage from "../../404";
 import { PlaceholderPosts } from "../../../Components/Layouts/PlaceholderGroup";
 import CardPost from "../../../Components/Post/CardPost";
 import catchErrors from "../../../utils/catchError";
@@ -16,6 +15,7 @@ import Followers from "../../../Components/Profile/Followers";
 import Following from "../../../Components/Profile/Following";
 import Settings from "../../../Components/Profile/Settings";
 import UpdateProfile from "../../../Components/Profile/UpdateProfile";
+import { NoUser } from "../../../Components/Common/NoData";
 
 function ProfilePage({
 	user,
@@ -25,7 +25,7 @@ function ProfilePage({
 	followingLength,
 	errorLoading,
 }) {
-	if (errorLoading) return <ErrorPage />;
+	if (errorLoading) return <NoUser />;
 
 	const [posts, setPosts] = useState([]);
 	const [loggedUserFollowStats, setLoggedUserFollowStats] =
