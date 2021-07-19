@@ -1,9 +1,11 @@
+import { useEffect } from "react";
+
 function ErrorPage() {
-    return (
-        <div>
-            404
-        </div>
-    )
+	useEffect(() => {
+		document.title = "404 | Page Not Found";
+	}, []);
+
+	return <div>404</div>;
 }
 
-export default ErrorPage
+export default ErrorPage;

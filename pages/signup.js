@@ -91,7 +91,7 @@ function SignUp() {
 	};
 
 	useEffect(() => {
-		document.title = "SignUp for Connectz";
+		document.title = "Signup | Connectz";
 		if (errMsg !== null) setTimeout(() => setErrMsg(null), 5000);
 	}, [errMsg]);
 

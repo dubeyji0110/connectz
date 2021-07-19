@@ -5,14 +5,11 @@ function Index() {
 	return (
 		<div className='homepage_container'>
 			<div className='left'>
-				<Image
-					src='/vector.jpg'
-					className='img'
-				/>
+				<Image src='/vector.jpg' className='img' />
 			</div>
 			<div className='right'>
 				<h1>Happening Now</h1>
-				<p>Join CONNECTZ and meet your fellow Introverts</p>
+				<p>Join CONNECTZ and make new Friends</p>
 				<div className='link_signup'>
 					<Link href='/signup'>SignUp</Link>
 					<Link href='/login'>LogIn</Link>

@@ -88,10 +88,10 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
 									/>
 								)}
 								<Divider
+									className='spi'
 									style={{
 										borderWidth: "0.5px",
 										borderColor: "rgba(0,0,0,0.05)",
-										margin: "0 !important",
 									}}
 								/>
 							</>

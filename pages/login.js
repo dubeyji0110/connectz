@@ -30,7 +30,7 @@ function Login() {
 	};
 
 	useEffect(() => {
-		document.title = "Login to CONNECTZ";
+		document.title = "Login | Connectz";
 		const userEmail = cookie.get("userEmail");
 		if (userEmail) setUser((prev) => ({ ...prev, email: userEmail }));
 		if (errMsg !== null) setTimeout(() => setErrMsg(null), 5000);

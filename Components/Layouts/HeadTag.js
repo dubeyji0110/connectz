@@ -8,7 +8,7 @@ const HeadTag = () => (
 
 		<link rel='stylesheet' type='text/css' href='/globals.css' />
 		<link rel='stylesheet' type='text/css' href='/nProgress.css' />
-		<title>Connect | Introvert App</title>
+		<title>Connectz | Socializing App</title>
 	</Head>
 );
 
