@@ -12,6 +12,7 @@ import { logoutUser } from "../../utils/authUser";
 
 function SideMenu({
 	user: { unreadNotification, email, unreadMessage, username },
+	notiLen,
 }) {
 	const Router = useRouter();
 
@@ -31,6 +32,7 @@ function SideMenu({
 				active={Router.pathname === "/messages"}
 			/>
 			<ListItem
+				notiLen={notiLen}
 				name='Notifications'
 				Icon={<NotificationsOutlined />}
 				link='/notifications'

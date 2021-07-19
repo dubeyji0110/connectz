@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
 		<>
 			<HeadTag />
 			{pageProps.user ? (
-				<Wrapper user={pageProps.user}>
+				<Wrapper user={pageProps.user} notiLen={pageProps.notiLen}>
 					<Component {...pageProps} />
 				</Wrapper>
 			) : (
@@ -33,7 +33,9 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 	const { token } = parseCookies(ctx);
 	let pageProps = {};
 	const protectedRoutes =
-		ctx.pathname === "/feed" || ctx.pathname === "/user/[username]";
+		ctx.pathname === "/feed" ||
+		ctx.pathname === "/user/[username]" ||
+		ctx.pathname === "/notifications";
 	if (!token) protectedRoutes && redirectUser(ctx, "/login");
 	else {
 		if (Component.getInitialProps) {
@@ -43,10 +45,17 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 			const res = await axios.get(`${baseUrl}/api/auth`, {
 				headers: { Authorization: token },
 			});
+			const res1 = await axios.get(
+				`${baseUrl}/api/notifications/unreadNo`,
+				{
+					headers: { Authorization: token },
+				}
+			);
 			const { user, userFollowStats } = res.data;
 			if (user) !protectedRoutes && redirectUser(ctx, "/feed");
 			pageProps.user = user;
 			pageProps.userFollowStats = userFollowStats;
+			pageProps.notiLen = res1.data;
 		} catch (error) {
 			destroyCookie(ctx, "token");
 			redirectUser(ctx, "/login");

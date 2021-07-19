@@ -20,6 +20,10 @@ const NotificationSchema = new Schema({
 				type: Schema.Types.ObjectId,
 				ref: "Post",
 			},
+			unread: {
+				type: Boolean,
+				default: true,
+			},
 			commentId: { type: String },
 			text: { type: String },
 			date: {

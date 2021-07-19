@@ -1,14 +1,25 @@
 import Link from "next/link";
 
-function ListItem({ name, Icon, link, onClick, newUpdate, active, className }) {
+function ListItem({
+	name,
+	Icon,
+	link,
+	onClick,
+	newUpdate,
+	active,
+	className,
+	notiLen,
+}) {
 	return link ? (
 		<Link href={link}>
 			<div
-				className={"sidebarLink " + (active ? "active " : "") + className}
+				className={
+					"sidebarLink " + (active ? "active " : "") + className
+				}
 				title={name}>
 				{Icon}
 				<h2 className='sidebarHeading'>{name}</h2>
-				{newUpdate && <span id='dot'></span>}
+				{newUpdate && <span id='dot'>{notiLen}</span>}
 			</div>
 		</Link>
 	) : (
