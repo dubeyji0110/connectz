@@ -1,5 +1,9 @@
 import { Image, Segment, Button } from "semantic-ui-react";
-import { PersonAddDisabledRounded } from "@material-ui/icons";
+import {
+	PersonAddDisabledRounded,
+	SpeakerNotesOffRounded,
+} from "@material-ui/icons";
+import Head from "next/head";
 
 export const NoFeed = () => (
 	<div
@@ -27,6 +31,12 @@ export const NoFeed = () => (
 
 export const NoFollowData = ({ profileName, follower, following }) => (
 	<>
+		<Head>
+			<title>
+				{profileName.split(" ")[0] + " "} does not have{" "}
+				{follower ? "followers" : "following"}
+			</title>
+		</Head>
 		{follower && (
 			<div
 				style={{
@@ -62,7 +72,9 @@ export const NoFollowData = ({ profileName, follower, following }) => (
 
 export const NoUser = () => (
 	<>
-		{(document.title = "404 | User Not Found")}
+		<Head>
+			<title>404 | User Not Found</title>
+		</Head>
 		<Segment
 			style={{
 				padding: "0",
@@ -161,9 +173,35 @@ export const NoNotifications = () => (
 			alignItems: "center",
 			height: "60vh",
 		}}>
+		<Head>
+			<title>No Notifications</title>
+		</Head>
 		<Image
 			style={{ width: "65%", filter: "brightness(0.65) contrast(3.4)" }}
 			src='https://res.cloudinary.com/dyekojods/image/upload/v1626684556/noNotifications_tluvjx.jpg'
 		/>
 	</div>
+);
+
+export const NoPost = () => (
+	<>
+		<Head>
+			<title>404 | Post Not Found</title>
+		</Head>
+		<div
+			style={{
+				display: "flex",
+				height: "60vh",
+				justifyContent: "center",
+				alignItems: "center",
+				flexDirection: "column",
+			}}>
+			<SpeakerNotesOffRounded
+				style={{ width: "5rem", height: "5rem", color: "#cecece" }}
+			/>
+			<p style={{ marginTop: "2rem", color: "#787878" }}>
+				We cannot find the post you are looking for {"):"}
+			</p>
+		</div>
+	</>
 );
