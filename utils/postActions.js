@@ -41,7 +41,7 @@ export const deletePost = async (
 ) => {
 	try {
 		await Axios.delete(`/${postId}`);
-		setPosts((prev) => prev.filter((post) => post._id !== postId));
+		setPosts && setPosts((prev) => prev.filter((post) => post._id !== postId));
 		setShowToaster({ show: true, msg: "Post Deleted!" });
 	} catch (error) {
 		setErrorMsg(catchErrors(error));

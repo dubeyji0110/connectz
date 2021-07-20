@@ -2,11 +2,12 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button, Divider, Image, Popup, Segment } from "semantic-ui-react";
+import { Divider, Dropdown, Image, Segment } from "semantic-ui-react";
 import {
 	ChatBubbleOutlineRounded,
 	FavoriteBorderRounded,
 	FavoriteRounded,
+	MoreVertRounded,
 } from "@material-ui/icons";
 import baseUrl from "../../utils/baseUrl";
 import { NoPost } from "../../Components/Common/NoData";
@@ -16,6 +17,7 @@ import CommentInput from "../../Components/Custom/CommentInput";
 import formatTime from "../../utils/formatTime";
 import { deletePost, likePost } from "../../utils/postActions";
 import { ErrorToastr, SuccessToastr } from "../../Components/Common/Toaster";
+import Router from "next/router";
 
 function PostPage({ post, errorLoading, user }) {
 	if (errorLoading) return <NoPost />;
@@ -80,49 +82,56 @@ function PostPage({ post, errorLoading, user }) {
 								<p className='textlight'>{post.location}</p>
 							)}
 						</div>
-						{(user.role === "root" ||
-							post.user._id === user._id) && (
-							<Popup
-								on='click'
-								position='top right'
-								trigger={
-									<Image
-										src='/deleteIcon.svg'
+						{user.role === "root" ||
+							(post.user._id === user._id && (
+								<Dropdown
+									trigger={<MoreVertRounded />}
+									item
+									icon={false}
+									pointing={false}
+									direction='left'>
+									<Dropdown.Menu
 										style={{
-											width: "1.7rem",
-											height: "1.7rem",
-											cursor: "pointer",
-										}}
-									/>
-								}>
-								<h4 style={{ fontSize: "1.2rem" }}>
-									Are you sure to delete?
-								</h4>
-								<p
-									style={{
-										fontSize: "1rem",
-										fontWeight: "500",
-										textShadow: "none",
-										marginBottom: "5px",
-									}}>
-									This action is irreversible!
-								</p>
-								<Button
-									size='mini'
-									color='red'
-									icon='trash'
-									content='Delete'
-									onClick={() => {
-										deletePost(
-											post._id,
-											setPosts,
-											setErrorMsg,
-											setShowToaster
-										);
-									}}
-								/>
-							</Popup>
-						)}
+											marginTop: "6px",
+											padding: "0 0.4rem",
+										}}>
+										<Dropdown.Item
+											style={{
+												padding: "0.8rem 1rem",
+												borderBottom:
+													"1px solid rgba(0,0,0,0.09)",
+											}}>
+											<div
+												onClick={async () => {
+													await deletePost(
+														post._id,
+														null,
+														setErrorMsg,
+														setShowToaster
+													);
+													Router.push("/feed");
+												}}
+												style={{
+													display: "flex",
+													justifyContent:
+														"space-between",
+													alignItems: "center",
+												}}>
+												<Image
+													src='/deleteIcon.svg'
+													style={{
+														width: "1.7rem",
+														height: "1.7rem",
+														cursor: "pointer",
+														filter: "saturate(0)",
+													}}
+												/>
+												Delete Post
+											</div>
+										</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown>
+							))}
 					</div>
 					<p style={{ paddingLeft: "2.1rem" }}>{post.text}</p>
 					{post.picUrl && (

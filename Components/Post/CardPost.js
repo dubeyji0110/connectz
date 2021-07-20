@@ -3,15 +3,10 @@ import {
 	FavoriteRounded,
 	FavoriteBorderRounded,
 	ChatBubbleOutlineRounded,
+	MoreVertRounded,
+	PageviewRounded,
 } from "@material-ui/icons";
-import {
-	Segment,
-	Image,
-	Popup,
-	Button,
-	Divider,
-	Modal,
-} from "semantic-ui-react";
+import { Segment, Image, Divider, Modal, Dropdown } from "semantic-ui-react";
 import Link from "next/link";
 import formatTime from "../../utils/formatTime";
 import CommentInput from "../Custom/CommentInput";
@@ -97,48 +92,77 @@ function CardPost({ user, post, setPosts, setShowToaster, setErrorMsg }) {
 							<p className='textlight'>{post.location}</p>
 						)}
 					</div>
-					{(user.role === "root" || post.user._id === user._id) && (
-						<Popup
-							on='click'
-							position='top right'
-							trigger={
-								<Image
-									src='/deleteIcon.svg'
-									style={{
-										width: "1.7rem",
-										height: "1.7rem",
-										cursor: "pointer",
-									}}
-								/>
-							}>
-							<h4 style={{ fontSize: "1.2rem" }}>
-								Are you sure to delete?
-							</h4>
-							<p
+					<Dropdown
+						trigger={<MoreVertRounded />}
+						item
+						icon={false}
+						pointing={false}
+						direction='left'>
+						<Dropdown.Menu
+							style={{
+								marginTop: "6px",
+								padding: "0 0.4rem",
+							}}>
+							<Dropdown.Item
 								style={{
-									fontSize: "1rem",
-									fontWeight: "500",
-									textShadow: "none",
-									marginBottom: "5px",
+									padding: "0.8rem 1rem",
+									borderBottom: "1px solid rgba(0,0,0,0.09)",
 								}}>
-								This action is irreversible!
-							</p>
-							<Button
-								size='mini'
-								color='red'
-								icon='trash'
-								content='Delete'
-								onClick={() => {
-									deletePost(
-										post._id,
-										setPosts,
-										setErrorMsg,
-										setShowToaster
-									);
-								}}
-							/>
-						</Popup>
-					)}
+								<Link href={`/post/${post._id}`}>
+									<a
+										style={{
+											display: "flex",
+											justifyContent: "space-between",
+											alignItems: "center",
+											width: "7.5rem",
+											color: "var(--primary-text-dark)",
+										}}>
+										<PageviewRounded
+											style={{
+												color: "var(--primary-text-dark)",
+											}}
+										/>
+										View Post
+									</a>
+								</Link>
+							</Dropdown.Item>
+							{(user.role === "root" ||
+								post.user._id === user._id) && (
+								<Dropdown.Item
+									style={{
+										padding: "0.8rem 1rem",
+										borderBottom:
+											"1px solid rgba(0,0,0,0.09)",
+									}}>
+									<div
+										onClick={() => {
+											deletePost(
+												post._id,
+												setPosts,
+												setErrorMsg,
+												setShowToaster
+											);
+										}}
+										style={{
+											display: "flex",
+											justifyContent: "space-between",
+											alignItems: "center",
+										}}>
+										<Image
+											src='/deleteIcon.svg'
+											style={{
+												width: "1.7rem",
+												height: "1.7rem",
+												cursor: "pointer",
+												filter: "saturate(0)",
+											}}
+										/>
+										Delete Post
+									</div>
+								</Dropdown.Item>
+							)}
+						</Dropdown.Menu>
+					</Dropdown>
 				</div>
 				<p style={{ paddingLeft: "2.1rem" }}>{post.text}</p>
 				{post.picUrl && (
