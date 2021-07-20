@@ -199,12 +199,12 @@ const UpdatePassword = ({
 			/>
 			<CustomInput
 				type={showPassword.p3 ? "text" : "password"}
-				placeholder='Repeat New Password'
+				placeholder='Confirm Password'
 				name='repeatNewPassword'
 				value={passwords.repeatNewPassword}
 				onChange={handleChange}
 				id='repeatNewPassword'
-				label='Repeat New Password'
+				label='Confirm Password'
 				Icon={
 					showPassword.p3 ? (
 						<VisibilityOffRounded
@@ -256,6 +256,7 @@ const UpdatePassword = ({
 				compact
 				size='small'
 				icon='cancel'
+				color='red'
 				content='Cancel'
 				onClick={() => setShowChangePassword(false)}
 			/>

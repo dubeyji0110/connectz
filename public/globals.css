@@ -260,7 +260,7 @@ path:active {
 	font-size: 1.3rem;
 	padding-left: 10px;
 }
-.MuiSvgIcon-root {
+.sidebarLink .MuiSvgIcon-root {
 	font-size: 1.8rem !important;
 }
 .linkWrapper {

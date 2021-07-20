@@ -158,8 +158,7 @@ function Profile({
 												}}>
 												<Instagram
 													style={{
-														fontSize:
-															"1rem !important",
+														fontSize: "1rem",
 														marginRight: "2px",
 														marginBottom: "0.2rem",
 													}}
@@ -180,8 +179,7 @@ function Profile({
 												}}>
 												<Twitter
 													style={{
-														fontSize:
-															"1rem !important",
+														fontSize: "1rem",
 														marginRight: "2px",
 														marginBottom: "0.2rem",
 													}}
@@ -212,8 +210,7 @@ function Profile({
 												}}>
 												<GitHub
 													style={{
-														fontSize:
-															"1rem !important",
+														fontSize: "1rem",
 														marginRight: "2px",
 														marginBottom: "0.2rem",
 													}}
@@ -234,8 +231,7 @@ function Profile({
 												}}>
 												<LanguageRounded
 													style={{
-														fontSize:
-															"1rem !important",
+														fontSize: "1rem",
 														marginRight: "2px",
 														marginBottom: "0.2rem",
 													}}
