@@ -28,7 +28,8 @@ function CommentNotification({ notification, id, readNotify }) {
 			</div>
 			<Link href={`/post/${notification.post._id}`}>
 				<div style={{ flex: "1", cursor: "pointer" }}>
-					<Link href={`/user/${notification.user.username}`}>
+					<Link
+						href={`/user/${notification.user.username}?tab=profile`}>
 						<a style={{ color: "var(--primary-text-dark)" }}>
 							<strong>{notification.user.name}</strong>
 						</a>

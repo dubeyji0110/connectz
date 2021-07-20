@@ -42,7 +42,7 @@ function FollowerNotification({
 					src={notification.user.profilePicUrl}
 				/>
 			</div>
-			<Link href={`/user/${notification.user.username}`}>
+			<Link href={`/user/${notification.user.username}?tab=profile`}>
 				<div style={{ flex: "1", cursor: "pointer" }}>
 					<p style={{ color: "var(--primary-text-dark)" }}>
 						<strong>{notification.user.name}</strong> started

@@ -45,7 +45,7 @@ function SideMenu({
 				className='small-hidden'
 				link={`/user/${username}?tab=profile`}
 				active={
-					"/user/" + Router.query.username === `/user/${username}`
+					"/user/" + Router.query.username === `/user/${username}` + "?tab=profile"
 				}
 			/>
 			<ListItem

@@ -68,14 +68,14 @@ function Followers({
 									}}
 								/>
 								<Link
-									href={`/user/${profileFollower.user.username}`}>
+									href={`/user/${profileFollower.user.username}?tab=profile`}>
 									<a>{profileFollower.user.name}</a>
 								</Link>
 							</div>
 							<div>
 								{profileFollower.user._id !== user._id && (
-                                    <Button
-                                        size="mini"
+									<Button
+										size='mini'
 										color={
 											isFollowing
 												? "instagram"

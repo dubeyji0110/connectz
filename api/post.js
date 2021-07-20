@@ -105,7 +105,9 @@ router.get("/", authenticate, async (req, res) => {
 // to get a post by id
 router.get("/:postId", authenticate, async (req, res) => {
 	try {
-		const post = await Post.findById(req.params.postId);
+		const post = await Post.findById(req.params.postId)
+			.populate("user")
+			.populate("comments.user");
 		if (!post) return res.status(404).send("Post not Found");
 		return res.json(post);
 	} catch (error) {

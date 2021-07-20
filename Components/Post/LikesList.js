@@ -27,12 +27,12 @@ function LikesList({ postId, trigger, setErrorMsg }) {
 
 	return (
 		<Popup
+			style={{ padding: "0.5rem" }}
 			on='click'
 			onClose={() => setLikesList([])}
 			onOpen={getLikes}
 			popperDependencies={[likesList]}
-			trigger={trigger}
-			wide>
+			trigger={trigger}>
 			{loading ? (
 				<LikesPlaceholder />
 			) : (
@@ -41,20 +41,24 @@ function LikesList({ postId, trigger, setErrorMsg }) {
 						<div
 							style={{
 								overflow: "auto",
-								maxHeight: "15rem",
-								height: "15rem",
-								minWidth: "210px",
+								maxHeight: "14rem",
+								minWidth: "160px",
 							}}>
-							<List selection size='large'>
+							<List selection size='small'>
 								{likesList.map((like) => (
-									<List.Item key={like._id}>
+									<List.Item
+										key={like._id}
+										style={{
+											borderBottom:
+												"0.5px solid rgba(0,0,0,0.05)",
+										}}>
 										<Image
 											avatar
 											src={like.user.profilePicUrl}
 										/>
 										<List.Content>
 											<Link
-												href={`/user/${like.user.username}`}>
+												href={`/user/${like.user.username}?tab=profile`}>
 												<List.Header
 													as='a'
 													content={like.user.name}

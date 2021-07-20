@@ -26,7 +26,7 @@ function PostComment({
 			</div>
 			<div className='comment-container'>
 				<div className='comment_details'>
-					<Link href={`/user/${comment.user.username}`}>
+					<Link href={`/user/${comment.user.username}?tab=profile`}>
 						<a>{comment.user.name}</a>
 					</Link>
 					<p className='textlight' style={{ marginLeft: "5px" }}>

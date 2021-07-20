@@ -38,7 +38,8 @@ function ImgModal({
 						/>
 						<div className='post_details'>
 							<h3 style={{ fontSize: "1.2rem" }}>
-								<Link href={`/user/${post.user.username}`}>
+								<Link
+									href={`/user/${post.user.username}?tab=profile`}>
 									<a>{post.user.name}</a>
 								</Link>
 							</h3>
