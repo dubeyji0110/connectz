@@ -19,7 +19,7 @@ function ListItem({
 				title={name}>
 				{Icon}
 				<h2 className='sidebarHeading'>{name}</h2>
-				{newUpdate && <span id='dot'>{notiLen}</span>}
+				{newUpdate && notiLen > 0 && <span id='dot'>{notiLen}</span>}
 			</div>
 		</Link>
 	) : (

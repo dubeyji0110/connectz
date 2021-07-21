@@ -6,6 +6,7 @@ const User = require("../models/User");
 const Profile = require("../models/Profile");
 const Follower = require("../models/Follower");
 const Notification = require("../models/Notification");
+const Chat = require("../models/Chat");
 
 const router = express.Router();
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
@@ -90,6 +91,12 @@ router.post("/", async (req, res) => {
 		await new Notification({
 			user: user._id,
 			notifications: [],
+		}).save();
+
+		// creating chats for user
+		await new Chat({
+			user: user._id,
+			chats: [],
 		}).save();
 
 		// creating token for user
