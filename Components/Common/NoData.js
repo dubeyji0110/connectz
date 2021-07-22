@@ -2,6 +2,7 @@ import { Image, Segment, Button } from "semantic-ui-react";
 import {
 	PersonAddDisabledRounded,
 	SpeakerNotesOffRounded,
+	QuestionAnswerRounded,
 } from "@material-ui/icons";
 import Head from "next/head";
 
@@ -201,6 +202,26 @@ export const NoPost = () => (
 			/>
 			<p style={{ marginTop: "2rem", color: "#787878" }}>
 				We cannot find the post you are looking for {"):"}
+			</p>
+		</div>
+	</>
+);
+
+export const NoChats = () => (
+	<>
+		<div
+			style={{
+				display: "flex",
+				height: "60vh",
+				justifyContent: "center",
+				alignItems: "center",
+				flexDirection: "column",
+			}}>
+			<QuestionAnswerRounded
+				style={{ width: "5rem", height: "5rem", color: "#cecece" }}
+			/>
+			<p style={{ marginTop: "2rem", color: "#787878" }}>
+				No Chats! Search above to message someone! {"):"}
 			</p>
 		</div>
 	</>
