@@ -18,7 +18,7 @@ router.get("/", authenticate, async (req, res) => {
 				name: chat.messagesWith.name,
 				profilePicUrl: chat.messagesWith.profilePicUrl,
 				lastMessage: chat.messages[chat.messages.length - 1].msg,
-				date: chat.messages[chats.messages.length - 1].date,
+				date: chat.messages[chat.messages.length - 1].date,
 			}));
 		}
 		return res.json(chats);
