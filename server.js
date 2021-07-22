@@ -1,16 +1,36 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
+const io = require("socket.io")(server);
 const next = require("next");
+const connectDB = require("./db/connectDB");
+const { addUser } = require("./server/userActions");
+const { loadMessages } = require("./server/messageActions");
+
 const dev = process.env.NODE_ENV !== "production";
 dev && require("dotenv").config();
-const connectDB = require("./db/connectDB");
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 connectDB();
+
+io.on("connection", (socket) => {
+	socket.on("join", async ({ userId }) => {
+		const users = await addUser(userId, socket.id);
+		setInterval(() => {
+			socket.emit("connectedUsers", {
+				users: users.filter((user) => user.userId !== userId),
+			});
+		}, 5000);
+	});
+	socket.on("loadMessages", async ({ userId, messagesWith }) => {
+		const { chat, error } = await loadMessages(userId, messagesWith);
+		if (!error) socket.emit("messagesLoaded", { chat });
+		else socket.emit("noChatFound");
+	});
+});
 
 nextApp.prepare().then(() => {
 	app.use("/api/signup", require("./api/signup"));
