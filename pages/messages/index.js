@@ -39,7 +39,7 @@ function Messages({ chatsData, user, errorLoading }) {
 		<>
 			{errorMsg && <ErrorToastr error={errorMsg} />}
 			{showToaster.show && <SuccessToastr msg={showToaster.msg} />}
-			<div style={{ width: "100%" }}>
+			<div className='messageContainer'>
 				<div className='messagePage'>
 					<div className='messagePage-left'>
 						<ChatSearch
@@ -48,6 +48,7 @@ function Messages({ chatsData, user, errorLoading }) {
 							setChats={setChats}
 						/>
 						<div className='chat-item-wrapper'>
+							<Divider className='spt' hidden />
 							{errorLoading || chats.length > 0 ? (
 								chats.map((chat, i) => (
 									<>
@@ -57,7 +58,7 @@ function Messages({ chatsData, user, errorLoading }) {
 											key={i}
 										/>
 										<Divider
-											className='spi'
+											className='spt'
 											style={{
 												borderWidth: "0.5px",
 												borderColor: "rgba(0,0,0,0.05)",

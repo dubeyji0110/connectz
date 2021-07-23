@@ -4,7 +4,7 @@ const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const next = require("next");
 const connectDB = require("./db/connectDB");
-const { addUser } = require("./server/userActions");
+const { addUser, removeUser } = require("./server/userActions");
 const { loadMessages } = require("./server/messageActions");
 
 const dev = process.env.NODE_ENV !== "production";
@@ -30,6 +30,7 @@ io.on("connection", (socket) => {
 		if (!error) socket.emit("messagesLoaded", { chat });
 		else socket.emit("noChatFound");
 	});
+	socket.on("disconnect", () => removeUser(socket.id));
 });
 
 nextApp.prepare().then(() => {

@@ -83,7 +83,10 @@ function ChatSearch({ setErrorMsg, chats, setChats }) {
 				results={results}
 				onSearchChange={handleChange}
 				minCharacters={1}
-				onResultSelect={(e, data) => addChat(data.result)}
+				onResultSelect={(e, data) => {
+					setText("");
+					addChat(data.result);
+				}}
 			/>
 		</div>
 	);
