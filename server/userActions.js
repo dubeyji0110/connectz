@@ -14,11 +14,9 @@ const addUser = async (userId, socketId) => {
 const removeUser = async (socketId) => {
 	const idx = users.map((user) => user.socketId).indexOf(socketId);
 	await users.splice(idx, 1);
-	return users;
 };
 
-const findConnectedUser = (userId) => {
+const findConnectedUser = (userId) =>
 	users.find((user) => user.userId === userId);
-};
 
 module.exports = { addUser, removeUser, findConnectedUser };

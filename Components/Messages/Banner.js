@@ -2,9 +2,13 @@ import { IconButton } from "@material-ui/core";
 import { ArrowBackRounded, MoreVertRounded } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { Image } from "semantic-ui-react";
+import { Dropdown, Image } from "semantic-ui-react";
 
-function Banner({ bannerData: { name, profilePicUrl }, connectedUsers }) {
+function Banner({
+	bannerData: { name, profilePicUrl },
+	connectedUsers,
+	deleteChat,
+}) {
 	const router = useRouter();
 	const isOnline =
 		connectedUsers.length > 0 &&
@@ -23,11 +27,10 @@ function Banner({ bannerData: { name, profilePicUrl }, connectedUsers }) {
 				padding: "0.5rem 1rem",
 				zIndex: "2",
 			}}>
-			<div className='lg-hidden'>
+			<div className='lg-hidden' onClick={() => router.push("/messages")}>
 				<IconButton>
 					<ArrowBackRounded
 						style={{ color: "var(--primary-text-light)" }}
-						onClick={() => router.push("/messages")}
 					/>
 				</IconButton>
 			</div>
@@ -58,11 +61,41 @@ function Banner({ bannerData: { name, profilePicUrl }, connectedUsers }) {
 					</p>
 				)}
 			</div>
-			<IconButton>
-				<MoreVertRounded
-					style={{ color: "var(--primary-text-light)" }}
-				/>
-			</IconButton>
+			<Dropdown
+				trigger={
+					<IconButton>
+						<MoreVertRounded
+							style={{ color: "var(--primary-text-light)" }}
+						/>
+					</IconButton>
+				}
+				item
+				icon={false}
+				pointing={false}
+				direction='left'>
+				<Dropdown.Menu
+					style={{
+						marginTop: "6px",
+						padding: "0 0.4rem",
+						zIndex: "10",
+					}}>
+					<Dropdown.Item
+						style={{
+							padding: "0.8rem 1rem",
+							borderBottom: "1px solid rgba(0,0,0,0.09)",
+						}}>
+						<div
+							onClick={() => deleteChat(router.query.chatId)}
+							style={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}>
+							Clear Conversation
+						</div>
+					</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
 		</div>
 	);
 }

@@ -49,7 +49,7 @@ router.delete("/:messagesWith", authenticate, async (req, res) => {
 		const { messagesWith } = req.params;
 		const user = await Chat.findOne({ user: userId });
 		const chatToDelete = user.chats.find(
-			(chat) => chat.messsagesWith.toString() === messagesWith
+			(chat) => chat.messagesWith.toString() === messagesWith
 		);
 		if (!chatToDelete) return res.status(404).send("Chat Not Found");
 		const idx = user.chats

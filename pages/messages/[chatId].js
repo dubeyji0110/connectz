@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import cookie from "js-cookie";
 import io from "socket.io-client";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
@@ -14,9 +15,10 @@ import { Divider } from "semantic-ui-react";
 import Message from "../../Components/Messages/Message";
 import MessageText from "../../Components/Messages/MessageText";
 
-const scrollDivToBottom = (divRef) =>
+const scrollDivToBottom = (divRef) => {
 	divRef.current !== null &&
-	divRef.current.scrollIntoView({ behaviour: "smooth" });
+		divRef.current.scrollIntoView({ behaviour: "smooth" });
+};
 
 function ChatPage({ chatsData, user, errorLoading }) {
 	const [chats, setChats] = useState(chatsData);
@@ -31,6 +33,51 @@ function ChatPage({ chatsData, user, errorLoading }) {
 	const router = useRouter();
 	const socket = useRef();
 	const divRef = useRef();
+	const chatId = useRef("");
+
+	const sendMessage = (msg) => {
+		if (socket.current) {
+			socket.current.emit("sendNewMsg", {
+				userId: user._id,
+				msgSendToUserId: chatId.current,
+				msg,
+			});
+		}
+	};
+
+	const deleteMessage = (msgId) => {
+		if (socket.current) {
+			socket.current.emit("deleteMsg", {
+				userId: user._id,
+				messagesWith: chatId.current,
+				msgId,
+			});
+			socket.current.on("msgDeleted", () => {
+				!showToaster.show &&
+					setShowToaster({ show: true, msg: "Message Deleted" });
+				setMessages((prev) => prev.filter((msg) => msg._id !== msgId));
+			});
+			socket.current.on(
+				"ErrorDeleteMsg",
+				() => !errorMsg && setErrorMsg("Error Deleting Message")
+			);
+		}
+	};
+
+	const deleteChat = async (messagesWith) => {
+		try {
+			await axios.delete(`${baseUrl}/api/chats/${messagesWith}`, {
+				headers: { Authorization: cookie.get("token") },
+			});
+			setChats((prev) =>
+				prev.filter((chat) => chat.messagesWith !== messagesWith)
+			);
+			router.push("/messages");
+		} catch (error) {
+			console.error(error);
+			setErrorMsg("Error Deleting Chat");
+		}
+	};
 
 	useEffect(() => {
 		errorMsg !== null && setTimeout(() => setErrorMsg(null), 4000);
@@ -63,6 +110,8 @@ function ChatPage({ chatsData, user, errorLoading }) {
 					name: chat.messagesWith.name,
 					profilePicUrl: chat.messagesWith.profilePicUrl,
 				});
+				chatId.current = chat.messagesWith._id;
+				divRef.current && scrollDivToBottom(divRef);
 			});
 			socket.current.on("noChatFound", async () => {
 				const { name, profilePicUrl } = await getUserInfo(
@@ -75,10 +124,80 @@ function ChatPage({ chatsData, user, errorLoading }) {
 				}
 				setBannerData({ name, profilePicUrl });
 				setMessages([]);
+				chatId.current = router.query.chatId;
 			});
 		};
 		if (socket.current) loadMessages();
 	}, [router.query.chatId]);
+
+	useEffect(() => {
+		if (socket.current) {
+			socket.current.on("msgNotSent", () =>
+				setErrorMsg("Error Send Message")
+			);
+			socket.current.on("msgSent", ({ newMsg }) => {
+				if (newMsg.receiver === chatId.current) {
+					setMessages((prev) => [...prev, newMsg]);
+					setChats((prev) => {
+						const prevChat = prev.find(
+							(chat) => chat.messagesWith === newMsg.receiver
+						);
+						prevChat.lastMessage = newMsg.msg;
+						prevChat.date = newMsg.date;
+						return [...prev];
+					});
+				}
+			});
+			socket.current.on("newMsgReceived", async ({ newMsg }) => {
+				let sender;
+				if (newMsg.sender === chatId.current) {
+					setMessages((prev) => [...prev, newMsg]);
+					setChats((prev) => {
+						const prevChat = prev.find(
+							(chat) => chat.messagesWith === newMsg.sender
+						);
+						prevChat.lastMessage = newMsg.msg;
+						prevChat.date = newMsg.date;
+						sender = prevChat.name;
+						return [...prev];
+					});
+				} else {
+					const ifPrevMsg =
+						chats.filter(
+							(chat) => chat.messagesWith === newMsg.sender
+						).length > 0;
+					if (ifPrevMsg) {
+						setChats((prev) => {
+							const prevChat = prev.find(
+								(chat) => chat.messagesWith === newMsg.sender
+							);
+							prevChat.lastMessage = newMsg.msg;
+							prevChat.date = newMsg.date;
+							sender = prevChat.name;
+							return [...prev];
+						});
+					} else {
+						const { name, profilePicUrl } = await getUserInfo(
+							newMsg.sender
+						);
+						sender = name;
+						const newChat = {
+							messagesWith: newMsg.sender,
+							name,
+							profilePicUrl,
+							lastMessage: newMsg.msg,
+							date: newMsg.date,
+						};
+						setChats((prev) => [newChat, ...prev]);
+					}
+				}
+			});
+		}
+	}, []);
+
+	useEffect(() => {
+		if (messages.length > 0) scrollDivToBottom(divRef);
+	}, [messages]);
 
 	return (
 		<>
@@ -136,6 +255,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 										background: "var(--secondary-blue)",
 									}}>
 									<Banner
+										deleteChat={deleteChat}
 										connectedUsers={connectedUsers}
 										bannerData={bannerData}
 									/>
@@ -151,7 +271,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 												bannerProfilePic={
 													bannerData.profilePicUrl
 												}
-												// deleteMsg={deleteMessage}
+												deleteMsg={deleteMessage}
 											/>
 										))}
 								</div>
@@ -160,7 +280,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 										position: "sticky",
 										bottom: "0",
 									}}>
-									<MessageText />
+									<MessageText sendMsg={sendMessage} />
 								</div>
 							</>
 						</div>

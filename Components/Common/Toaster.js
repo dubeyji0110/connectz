@@ -3,6 +3,7 @@ import { toast, ToastContainer } from "react-toastify";
 export const SuccessToastr = ({ msg }) => {
 	return (
 		<ToastContainer
+			limit={1}
 			position='bottom-center'
 			autoClose={3000}
 			hideProgressBar={false}
@@ -30,6 +31,7 @@ export const SuccessToastr = ({ msg }) => {
 export const ErrorToastr = ({ error }) => {
 	return (
 		<ToastContainer
+			limit={1}
 			position='bottom-center'
 			autoClose={3000}
 			hideProgressBar={false}

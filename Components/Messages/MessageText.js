@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Segment } from "semantic-ui-react";
 
-function MessageText() {
+function MessageText({ sendMsg }) {
 	const [text, setText] = useState("");
 	const [loading, setLoading] = useState(false);
 
@@ -9,7 +9,11 @@ function MessageText() {
 		<Form
 			reply
 			onSubmit={(e) => {
+				setLoading(true);
 				e.preventDefault();
+				sendMsg(text);
+				setText("");
+				setLoading(false);
 			}}>
 			<Form.Input
 				className='ok'

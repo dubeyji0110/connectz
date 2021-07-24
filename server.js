@@ -4,8 +4,17 @@ const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const next = require("next");
 const connectDB = require("./db/connectDB");
-const { addUser, removeUser } = require("./server/userActions");
-const { loadMessages } = require("./server/messageActions");
+const {
+	addUser,
+	removeUser,
+	findConnectedUser,
+} = require("./server/userActions");
+const {
+	loadMessages,
+	sendMsg,
+	setMessageToUnread,
+	deleteMsg,
+} = require("./server/messageActions");
 
 const dev = process.env.NODE_ENV !== "production";
 dev && require("dotenv").config();
@@ -25,11 +34,38 @@ io.on("connection", (socket) => {
 			});
 		}, 5000);
 	});
+
 	socket.on("loadMessages", async ({ userId, messagesWith }) => {
 		const { chat, error } = await loadMessages(userId, messagesWith);
 		if (!error) socket.emit("messagesLoaded", { chat });
 		else socket.emit("noChatFound");
 	});
+
+	socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
+		const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
+		if (error) {
+			const sender = findConnectedUser(userId);
+			sender && io.to(sender.socketId).emit("msgNotSent");
+			return;
+		}
+		const receiver = findConnectedUser(msgSendToUserId);
+		if (receiver)
+			io.to(receiver.socketId).emit("newMsgReceived", { newMsg });
+		else await setMessageToUnread(msgSendToUserId);
+		if (!error) socket.emit("msgSent", { newMsg });
+		console.log(newMsg);
+	});
+
+	socket.on("deleteMsg", async ({ userId, messagesWith, msgId }) => {
+		const { success, error } = await deleteMsg(userId, messagesWith, msgId);
+		if (error) {
+			const user = findConnectedUser(userId);
+			user && io.to(user.socketId).emit("ErrorDeleteMsg");
+			return;
+		}
+		if (success) socket.emit("msgDeleted");
+	});
+
 	socket.on("disconnect", () => removeUser(socket.id));
 });
 
