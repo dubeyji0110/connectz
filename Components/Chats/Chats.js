@@ -26,7 +26,7 @@ function Chat({ connectedUsers, chat, active }) {
 					{isOnline && <div id='online'></div>}
 				</h4>
 				<p style={{ color: "var(--secondary-text-dark)" }}>
-					{chat.lastMessage.length > 20
+					{chat.lastMessage.length > 20 && chat.lastMessage.length < 0
 						? `${chat.lastMessage.substring(0, 20)}...`
 						: chat.lastMessage}
 				</p>

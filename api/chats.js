@@ -17,8 +17,14 @@ router.get("/", authenticate, async (req, res) => {
 				messagesWith: chat.messagesWith._id,
 				name: chat.messagesWith.name,
 				profilePicUrl: chat.messagesWith.profilePicUrl,
-				lastMessage: chat.messages[chat.messages.length - 1].msg,
-				date: chat.messages[chat.messages.length - 1].date,
+				lastMessage:
+					chat.messages.length > 0
+						? chat.messages[chat.messages.length - 1].msg
+						: "",
+				date:
+					chat.messages.length > 0
+						? chat.messages[chat.messages.length - 1].date
+						: Date.now(),
 			}));
 		}
 		return res.json(chats);
@@ -58,6 +64,24 @@ router.delete("/:messagesWith", authenticate, async (req, res) => {
 		user.chats.splice(idx, 1);
 		await user.save();
 		return res.status(200).send("Chat Deleted");
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send("Internal Server Error");
+	}
+});
+
+router.post("/addchat", authenticate, async (req, res) => {
+	try {
+		const { userId } = req;
+		const { messagesWith } = req.body;
+		const user = await Chat.findOne({ user: userId });
+		const newChat = {
+			messagesWith,
+			messages: [],
+		};
+		user.chats.unshift(newChat);
+		user.save();
+		return res.status(200).send("Chat Added");
 	} catch (error) {
 		console.error(error);
 		return res.status(500).send("Internal Server Error");

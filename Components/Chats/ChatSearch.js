@@ -41,7 +41,7 @@ function ChatSearch({ setErrorMsg, chats, setChats }) {
 		setLoading(false);
 	};
 
-	const addChat = (result) => {
+	const addChat = async (result) => {
 		const inChat =
 			chats.length > 0 &&
 			chats.filter((chat) => chat.messagesWith === result._id).length > 0;
@@ -54,6 +54,11 @@ function ChatSearch({ setErrorMsg, chats, setChats }) {
 				date: Date.now(),
 			};
 			setChats((prev) => [newChat, ...prev]);
+			await axios.post(
+				`${baseUrl}/api/chats/addchat`,
+				{ messagesWith: result._id },
+				{ headers: { Authorization: cookie.get("token") } }
+			);
 		}
 		router.push(`/messages/${result._id}`);
 	};

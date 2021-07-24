@@ -53,7 +53,6 @@ io.on("connection", (socket) => {
 			io.to(receiver.socketId).emit("newMsgReceived", { newMsg });
 		else await setMessageToUnread(msgSendToUserId);
 		if (!error) socket.emit("msgSent", { newMsg });
-		console.log(newMsg);
 	});
 
 	socket.on("deleteMsg", async ({ userId, messagesWith, msgId }) => {
