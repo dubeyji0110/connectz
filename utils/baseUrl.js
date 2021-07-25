@@ -3,4 +3,4 @@ const baseUrl =
 		? "http://127.0.0.1:3000"
 		: "https://connectz-app.herokuapp.com";
 
-export default baseUrl;
+module.exports = baseUrl;

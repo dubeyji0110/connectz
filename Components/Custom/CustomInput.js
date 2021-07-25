@@ -7,6 +7,7 @@ function CustomInput(props) {
 		marginBottom: "10px",
 		display: "block",
 		width: "100%",
+		textAlign: "left",
 	};
 
 	const labelStyles = {
