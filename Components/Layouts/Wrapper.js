@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import SearchComponent from "../Common/Search";
 import SideMenu from "./SideMenu";
 
-function Wrapper({ children, user, notiLen }) {
+function Wrapper({ children, user, notiLen, unreadMsg }) {
 	const router = useRouter();
 
 	return (
@@ -13,7 +13,11 @@ function Wrapper({ children, user, notiLen }) {
 			) : (
 				<>
 					<aside className='main_options'>
-						<SideMenu user={user} notiLen={notiLen} />
+						<SideMenu
+							user={user}
+							notiLen={notiLen}
+							unreadMsg={unreadMsg}
+						/>
 					</aside>
 					<section className='main'>{children}</section>
 					<aside className='main_more' id='searchbar'>

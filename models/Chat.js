@@ -12,6 +12,10 @@ const ChatSchema = new Schema({
 				type: Schema.Types.ObjectId,
 				ref: "User",
 			},
+			unread: {
+				type: Boolean,
+				default: false,
+			},
 			messages: [
 				{
 					msg: {

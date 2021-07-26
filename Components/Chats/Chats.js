@@ -31,7 +31,8 @@ function Chat({ connectedUsers, chat, active }) {
 						: chat.lastMessage}
 				</p>
 			</div>
-			<div>
+			<div style={{ textAlign: "center" }}>
+				{chat.unread && <span id='msgdot'>unread</span>}
 				<p
 					style={{
 						color: "var(--secondary-text-dark)",

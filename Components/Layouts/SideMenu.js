@@ -13,6 +13,7 @@ import { logoutUser } from "../../utils/authUser";
 function SideMenu({
 	user: { unreadNotification, email, unreadMessage, username },
 	notiLen,
+	unreadMsg,
 }) {
 	const Router = useRouter();
 
@@ -25,10 +26,11 @@ function SideMenu({
 				active={Router.pathname === "/feed"}
 			/>
 			<ListItem
+				unreadMsg={unreadMsg}
 				name='Messages'
 				Icon={<ChatOutlined />}
 				link='/messages'
-				newUpdate={unreadMessage}
+				newMessage={unreadMessage}
 				active={Router.pathname === "/messages"}
 			/>
 			<ListItem

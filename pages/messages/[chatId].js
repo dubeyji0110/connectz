@@ -99,6 +99,19 @@ function ChatPage({ chatsData, user, errorLoading }) {
 	}, []);
 
 	useEffect(() => {
+		const markRead = async () => {
+			if (chatId) {
+				await axios.post(
+					`${baseUrl}/api/chats/readchat/${chatId.current}`,
+					{},
+					{ headers: { Authorization: cookie.get("token") } }
+				);
+			}
+		};
+		setTimeout(() => markRead(), 2000);
+	}, [chatId]);
+
+	useEffect(() => {
 		const loadMessages = () => {
 			socket.current.emit("loadMessages", {
 				userId: user._id,

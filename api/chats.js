@@ -16,6 +16,7 @@ router.get("/", authenticate, async (req, res) => {
 			chats = await user.chats.map((chat) => ({
 				messagesWith: chat.messagesWith._id,
 				name: chat.messagesWith.name,
+				unread: chat.unread,
 				profilePicUrl: chat.messagesWith.profilePicUrl,
 				lastMessage:
 					chat.messages.length > 0
@@ -70,6 +71,7 @@ router.delete("/:messagesWith", authenticate, async (req, res) => {
 	}
 });
 
+// to add new Chat
 router.post("/addchat", authenticate, async (req, res) => {
 	try {
 		const { userId } = req;
@@ -82,6 +84,41 @@ router.post("/addchat", authenticate, async (req, res) => {
 		user.chats.unshift(newChat);
 		user.save();
 		return res.status(200).send("Chat Added");
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send("Internal Server Error");
+	}
+});
+
+// to find number of unread messages
+router.get("/unread", authenticate, async (req, res) => {
+	try {
+		const { userId } = req;
+		const user = await Chat.findOne({ user: userId });
+		const unread = user.chats.filter((chat) => chat.unread === true).length;
+		res.status(200).json(unread);
+	} catch (error) {
+		console.error(error);
+		return res.status(500).send("Internal Server Error");
+	}
+});
+
+// set chat as read
+router.post("/readchat/:messagesWith", authenticate, async (req, res) => {
+	try {
+		const { userId } = req;
+		const { messagesWith } = req.params;
+		const user = await Chat.findOne({ user: userId });
+		const chat = user.chats.filter(
+			(chat) => chat.messagesWith.toString() === messagesWith
+		);
+		if (chat[0].unread) chat[0].unread = false;
+		user.chats.map((chat) => {
+			if (chat.messagesWith.toString() === messagesWith)
+				chat.unread = false;
+		});
+		user.save();
+		res.status(200).send("updated");
 	} catch (error) {
 		console.error(error);
 		return res.status(500).send("Internal Server Error");

@@ -684,6 +684,16 @@ button.ui.blue.icon {
 .ui.divider.spt {
 	margin: 0.2rem !important;
 }
+#msgdot {
+    background: var(--success-color);
+    color: white;
+    font-weight: 600;
+    border-radius: 2rem;
+    padding: 0.2rem;
+    display: inline-block;
+    margin-bottom: 0.1rem;
+    font-size: 0.8rem;
+}
 #online {
 	display: inline-block;
 	width: 0.7rem;

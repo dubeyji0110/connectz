@@ -9,6 +9,8 @@ function ListItem({
 	active,
 	className,
 	notiLen,
+	newMessage,
+	unreadMsg,
 }) {
 	return link ? (
 		<Link href={link}>
@@ -20,6 +22,9 @@ function ListItem({
 				{Icon}
 				<h2 className='sidebarHeading'>{name}</h2>
 				{newUpdate && notiLen > 0 && <span id='dot'>{notiLen}</span>}
+				{newMessage && unreadMsg > 0 && (
+					<span id='dot'>{unreadMsg}</span>
+				)}
 			</div>
 		</Link>
 	) : (
