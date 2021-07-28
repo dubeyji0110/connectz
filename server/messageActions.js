@@ -46,6 +46,7 @@ const sendMsg = async (userId, msgSendToUserId, msg) => {
 		);
 		if (receiverChats) {
 			receiverChats.messages.push(newMsg);
+			receiverChats.unread = true;
 			await msgSendToUser.save();
 		} else {
 			const newChat = {
