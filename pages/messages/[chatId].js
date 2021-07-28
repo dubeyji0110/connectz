@@ -108,7 +108,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 				);
 			}
 		};
-		setTimeout(() => markRead(), 2000);
+		return () => markRead();
 	}, [chatId]);
 
 	useEffect(() => {

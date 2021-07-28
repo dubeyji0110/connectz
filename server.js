@@ -51,8 +51,8 @@ io.on("connection", (socket) => {
 		const receiver = findConnectedUser(msgSendToUserId);
 		if (receiver)
 			io.to(receiver.socketId).emit("newMsgReceived", { newMsg });
-		else await setMessageToUnread(msgSendToUserId);
-		if (!error) socket.emit("msgSent", { newMsg });
+		await setMessageToUnread(msgSendToUserId);
+		socket.emit("msgSent", { newMsg });
 	});
 
 	socket.on("deleteMsg", async ({ userId, messagesWith, msgId }) => {
