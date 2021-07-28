@@ -14,7 +14,7 @@ const ChatSchema = new Schema({
 			},
 			unread: {
 				type: Boolean,
-				default: false,
+				default: true,
 			},
 			messages: [
 				{
