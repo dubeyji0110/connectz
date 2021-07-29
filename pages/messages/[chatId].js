@@ -14,6 +14,7 @@ import Banner from "../../Components/Messages/Banner";
 import { Divider } from "semantic-ui-react";
 import Message from "../../Components/Messages/Message";
 import MessageText from "../../Components/Messages/MessageText";
+import Spinner from "../../Components/Custom/Spinner"
 
 const scrollDivToBottom = (divRef) => {
 	divRef.current !== null &&
@@ -274,7 +275,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 									/>
 								</div>
 								<div className='chat-container'>
-									{messages.length > 0 &&
+									{messages.length > 0 ?
 										messages.map((msg, i) => (
 											<Message
 												divRef={divRef}
@@ -286,7 +287,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 												}
 												deleteMsg={deleteMessage}
 											/>
-										))}
+										)): <Spinner />}
 								</div>
 								<div
 									style={{

@@ -1,13 +1,4 @@
-import {
-	Placeholder,
-	Divider,
-	List,
-	Button,
-	Card,
-	Container,
-	Icon,
-	Image,
-} from "semantic-ui-react";
+import { Placeholder, Divider, Image } from "semantic-ui-react";
 import { range } from "lodash";
 
 export const PlaceholderPosts = () =>
@@ -43,10 +34,21 @@ export const EndMessage = () => (
 );
 
 export const LikesPlaceholder = () =>
-	range(1, 6).map((item) => (
+	range(1, 5).map((item) => (
 		<Placeholder key={item} style={{ minWidth: "200px" }}>
 			<Placeholder.Header image>
 				<Placeholder.Line length='full' />
 			</Placeholder.Header>
 		</Placeholder>
 	));
+
+export const NameBanner = () => (
+	<div
+		className='placeholderGroup'>
+		<div className='placeImg'></div>
+		<div>
+			<div className='placeLine'></div>
+			<div className='placeLine'></div>
+		</div>
+	</div>
+);

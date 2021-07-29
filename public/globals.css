@@ -592,13 +592,14 @@ button.ui.blue.icon {
 	color: initial;
 }
 .mySpinner {
-	border: 5px solid #68c7ff;
-	border-top: 5px solid var(--primary-blue);
+	border: 5px solid #d2eeff;
+	border-top: 5px solid var(--secondary-blue);
 	border-radius: 50%;
-	width: 2rem;
-	height: 2rem;
+	width: 3rem;
+	height: 3rem;
 	animation: spin 0.8s linear infinite;
 	margin: auto;
+	margin-top: 2rem;
 }
 .ui.divider.spi {
 	margin: 0 !important;
@@ -685,14 +686,14 @@ button.ui.blue.icon {
 	margin: 0.2rem !important;
 }
 #msgdot {
-    background: var(--success-color);
-    color: white;
-    font-weight: 600;
-    border-radius: 2rem;
-    padding: 0.2rem;
-    display: inline-block;
-    margin-bottom: 0.1rem;
-    font-size: 0.8rem;
+	background: var(--success-color);
+	color: white;
+	font-weight: 600;
+	border-radius: 2rem;
+	padding: 0.2rem;
+	display: inline-block;
+	margin-bottom: 0.1rem;
+	font-size: 0.8rem;
 }
 #online {
 	display: inline-block;
@@ -739,6 +740,27 @@ button.ui.blue.icon {
 .message.own {
 	background: var(--secondary-blue);
 	border-radius: 20px 15px 0 20px;
+}
+.placeholderGroup {
+	display: flex;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
+}
+.placeImg,
+.placeLine {
+	border-radius: 50%;
+	height: 3rem;
+	width: 3em;
+	background: #b8b8b85b;
+	overflow: hidden;
+}
+.placeLine {
+	border-radius: 1rem;
+	margin-left: 1rem;
+	width: 12rem;
+	height: 1rem;
+	margin-bottom: 0.5rem;
 }
 @media only screen and (max-width: 800px) {
 	.lg-hidden {

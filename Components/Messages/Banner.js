@@ -3,6 +3,7 @@ import { ArrowBackRounded, MoreVertRounded } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Dropdown, Image } from "semantic-ui-react";
+import { NameBanner } from "../Layouts/PlaceholderGroup";
 
 function Banner({
 	bannerData: { name, profilePicUrl },
@@ -34,33 +35,41 @@ function Banner({
 					/>
 				</IconButton>
 			</div>
-			<div style={{ marginRight: "1rem" }}>
-				<Image
-					avatar
-					style={{ width: "2.5rem", height: "2.5rem" }}
-					src={profilePicUrl}
-				/>
-			</div>
-			<div style={{ flex: "1" }}>
-				<h4
-					style={{
-						color: "var(--primary-text-light)",
-						fontWeight: "500",
-					}}>
-					{name}
-				</h4>
-				{isOnline && (
-					<p
-						style={{
-							color: "var(--primary-text-light)",
-							fontWeight: "300",
-							fontSize: "0.8rem",
-							letterSpacing: "0.8px",
-						}}>
-						online
-					</p>
-				)}
-			</div>
+			{!name || !profilePicUrl ? (
+				<div style={{ flex: "1" }}>
+					<NameBanner />
+				</div>
+			) : (
+				<>
+					<div style={{ marginRight: "1rem" }}>
+						<Image
+							avatar
+							style={{ width: "2.5rem", height: "2.5rem" }}
+							src={profilePicUrl}
+						/>
+					</div>
+					<div style={{ flex: "1" }}>
+						<h4
+							style={{
+								color: "var(--primary-text-light)",
+								fontWeight: "500",
+							}}>
+							{name}
+						</h4>
+						{isOnline && (
+							<p
+								style={{
+									color: "var(--primary-text-light)",
+									fontWeight: "300",
+									fontSize: "0.8rem",
+									letterSpacing: "0.8px",
+								}}>
+								online
+							</p>
+						)}
+					</div>
+				</>
+			)}
 			<Dropdown
 				trigger={
 					<IconButton>
