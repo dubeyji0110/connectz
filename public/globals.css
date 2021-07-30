@@ -744,23 +744,35 @@ button.ui.blue.icon {
 .placeholderGroup {
 	display: flex;
 	align-items: center;
-	position: relative;
-	overflow: hidden;
 }
 .placeImg,
 .placeLine {
 	border-radius: 50%;
 	height: 3rem;
 	width: 3em;
-	background: #b8b8b85b;
-	overflow: hidden;
+	background-image: linear-gradient(
+		to right,
+		rgba(0, 0, 0, 0.08) 0,
+		rgba(0, 0, 0, 0.15) 15%,
+		rgba(0, 0, 0, 0.08) 30%
+	);
+	background-size: 1200px 100%;
+	animation: placeholder 1.5s infinite linear;
 }
 .placeLine {
-	border-radius: 1rem;
-	margin-left: 1rem;
+	border-radius: 0.5rem;
+	margin-left: 0.8rem;
 	width: 12rem;
-	height: 1rem;
-	margin-bottom: 0.5rem;
+	height: 0.8rem;
+	margin-bottom: 0.3rem;
+}
+@keyframes placeholder {
+	0% {
+		background-position: -1200px 0;
+	}
+	100% {
+		background-position: 1200px 0;
+	}
 }
 @media only screen and (max-width: 800px) {
 	.lg-hidden {

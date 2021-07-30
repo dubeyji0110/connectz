@@ -40,9 +40,11 @@ router.get("/user/:userId", authenticate, async (req, res) => {
 	try {
 		const user = await User.findById(req.params.userId);
 		if (!user) return res.status(404).send("User Not Found");
-		return res
-			.status(200)
-			.json({ name: user.name, profilePicUrl: user.profilePicUrl });
+		return res.status(200).json({
+			name: user.name,
+			profilePicUrl: user.profilePicUrl,
+			username: user.username,
+		});
 	} catch (error) {
 		console.error(error);
 		return res.status(500).send("Internal Server Error");

@@ -14,7 +14,7 @@ import Banner from "../../Components/Messages/Banner";
 import { Divider } from "semantic-ui-react";
 import Message from "../../Components/Messages/Message";
 import MessageText from "../../Components/Messages/MessageText";
-import Spinner from "../../Components/Custom/Spinner"
+import Spinner from "../../Components/Custom/Spinner";
 
 const scrollDivToBottom = (divRef) => {
 	divRef.current !== null &&
@@ -28,6 +28,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 	const [bannerData, setBannerData] = useState({
 		name: "",
 		profilePicUrl: "",
+		username: "",
 	});
 	const [showToaster, setShowToaster] = useState({ show: false, msg: "" });
 	const [errorMsg, setErrorMsg] = useState(null);
@@ -122,21 +123,22 @@ function ChatPage({ chatsData, user, errorLoading }) {
 				setMessages(chat.messages);
 				setBannerData({
 					name: chat.messagesWith.name,
+					username: chat.messagesWith.username,
 					profilePicUrl: chat.messagesWith.profilePicUrl,
 				});
 				chatId.current = chat.messagesWith._id;
 				divRef.current && scrollDivToBottom(divRef);
 			});
 			socket.current.on("noChatFound", async () => {
-				const { name, profilePicUrl } = await getUserInfo(
+				const { name, profilePicUrl, username } = await getUserInfo(
 					router.query.chatId
 				);
-				if (!name || !profilePicUrl) {
+				if (!name || !profilePicUrl || !username) {
 					setErrorMsg("Chat Not found");
 					router.push("/messages");
 					return;
 				}
-				setBannerData({ name, profilePicUrl });
+				setBannerData({ name, profilePicUrl, username });
 				setMessages([]);
 				chatId.current = router.query.chatId;
 			});
@@ -275,7 +277,7 @@ function ChatPage({ chatsData, user, errorLoading }) {
 									/>
 								</div>
 								<div className='chat-container'>
-									{messages.length > 0 ?
+									{messages.length > 0 ? (
 										messages.map((msg, i) => (
 											<Message
 												divRef={divRef}
@@ -287,7 +289,10 @@ function ChatPage({ chatsData, user, errorLoading }) {
 												}
 												deleteMsg={deleteMessage}
 											/>
-										)): <Spinner />}
+										))
+									) : (
+										<Spinner />
+									)}
 								</div>
 								<div
 									style={{

@@ -1,4 +1,5 @@
 import { IconButton } from "@material-ui/core";
+import Link from "next/link";
 import { ArrowBackRounded, MoreVertRounded } from "@material-ui/icons";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -6,7 +7,7 @@ import { Dropdown, Image } from "semantic-ui-react";
 import { NameBanner } from "../Layouts/PlaceholderGroup";
 
 function Banner({
-	bannerData: { name, profilePicUrl },
+	bannerData: { name, profilePicUrl, username },
 	connectedUsers,
 	deleteChat,
 }) {
@@ -17,8 +18,8 @@ function Banner({
 			.length > 0;
 
 	useEffect(() => {
-		document.title = `Messages with ${name}`;
-	}, []);
+		document.title = `Messages with ${username}`;
+	}, [username]);
 
 	return (
 		<div
@@ -49,13 +50,16 @@ function Banner({
 						/>
 					</div>
 					<div style={{ flex: "1" }}>
-						<h4
-							style={{
-								color: "var(--primary-text-light)",
-								fontWeight: "500",
-							}}>
-							{name}
-						</h4>
+						<Link href={`/user/${username}?tab=profile`}>
+							<h4
+								style={{
+									color: "var(--primary-text-light)",
+									fontWeight: "500",
+									cursor: "pointer",
+								}}>
+								{name}
+							</h4>
+						</Link>
 						{isOnline && (
 							<p
 								style={{
