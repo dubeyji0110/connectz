@@ -51,12 +51,7 @@ function ProfilePage({
 	}, [showToaster]);
 
 	useEffect(() => {
-		if (
-			(!owner &&
-				(router.query.tab === "settings" ||
-					router.query.tab === "update_profile")) ||
-			!router.query.tab
-		)
+		if (!owner && router.query.tab && router.query.tab !== "profile")
 			router.push("?tab=profile");
 		router.query.tab && setActiveTab(router.query.tab);
 	}, [router.query]);
@@ -117,6 +112,7 @@ function ProfilePage({
 								style={{
 									filter: "contrast(1.5)",
 									transform: "scale(0.7)",
+									margin: "auto",
 								}}
 							/>
 						)}
