@@ -4,6 +4,7 @@ import "cropperjs/dist/cropper.css";
 import { parseCookies, destroyCookie } from "nookies";
 import nProgress from "nprogress";
 import Router from "next/router";
+import { useEffect } from "react";
 import HeadTag from "../Components/Layouts/HeadTag";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
@@ -11,9 +12,15 @@ import { redirectUser } from "../utils/authUser";
 import Wrapper from "../Components/Layouts/Wrapper";
 
 function MyApp({ Component, pageProps }) {
-	// Router.onRouteChangeStart = () => nProgress.start();
-	// Router.onRouteChangeComplete = () => nProgress.done();
-	// Router.onRouteChangeError = () => nProgress.done();
+	Router.onRouteChangeStart = () => nProgress.start();
+	Router.onRouteChangeComplete = () => nProgress.done();
+	Router.onRouteChangeError = () => nProgress.done();
+
+	useEffect(() => {
+		document.addEventListener("contextmenu", (event) =>
+			event.preventDefault()
+		);
+	}, []);
 
 	return (
 		<>

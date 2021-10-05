@@ -10,6 +10,7 @@
 	letter-spacing: 0.2px;
 	transition: background 0.3s ease-in-out !important;
 	scrollbar-width: none;
+	user-select: none;
 }
 body {
 	animation: fade 500ms forwards;
