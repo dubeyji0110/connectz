@@ -11,9 +11,9 @@ import { redirectUser } from "../utils/authUser";
 import Wrapper from "../Components/Layouts/Wrapper";
 
 function MyApp({ Component, pageProps }) {
-	Router.onRouteChangeStart = () => nProgress.start();
-	Router.onRouteChangeComplete = () => nProgress.done();
-	Router.onRouteChangeError = () => nProgress.done();
+	// Router.onRouteChangeStart = () => nProgress.start();
+	// Router.onRouteChangeComplete = () => nProgress.done();
+	// Router.onRouteChangeError = () => nProgress.done();
 
 	return (
 		<>
@@ -51,21 +51,21 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 			const res = await axios.get(`${baseUrl}/api/auth`, {
 				headers: { Authorization: token },
 			});
-			const unreadNotification = await axios.get(
-				`${baseUrl}/api/notifications/unreadNo`,
-				{
-					headers: { Authorization: token },
-				}
-			);
-			const unreadMsg = await axios.get(`${baseUrl}/api/chats/unread`, {
-				headers: { Authorization: token },
-			});
-			const { user, userFollowStats } = res.data;
+			// const unreadNotification = await axios.get(
+			// 	`${baseUrl}/api/notifications/unreadNo`,
+			// 	{
+			// 		headers: { Authorization: token },
+			// 	}
+			// );
+			// const unreadMsg = await axios.get(`${baseUrl}/api/chats/unread`, {
+			// 	headers: { Authorization: token },
+			// });
+			const { user, userFollowStats, len, unread } = res.data;
 			if (user) !protectedRoutes && redirectUser(ctx, "/feed");
 			pageProps.user = user;
 			pageProps.userFollowStats = userFollowStats;
-			pageProps.notiLen = unreadNotification.data;
-			pageProps.unreadMsg = unreadMsg.data;
+			pageProps.notiLen = len;
+			pageProps.unreadMsg = unread;
 		} catch (error) {
 			destroyCookie(ctx, "token");
 			redirectUser(ctx, "/login");

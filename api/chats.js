@@ -93,17 +93,17 @@ router.post("/addchat", authenticate, async (req, res) => {
 });
 
 // to find number of unread messages
-router.get("/unread", authenticate, async (req, res) => {
-	try {
-		const { userId } = req;
-		const user = await Chat.findOne({ user: userId });
-		const unread = user.chats.filter((chat) => chat.unread === true).length;
-		res.status(200).json(unread);
-	} catch (error) {
-		console.error(error);
-		return res.status(500).send("Internal Server Error");
-	}
-});
+// router.get("/unread", authenticate, async (req, res) => {
+// 	try {
+// 		const { userId } = req;
+// 		const user = await Chat.findOne({ user: userId });
+// 		const unread = user.chats.filter((chat) => chat.unread === true).length;
+// 		res.status(200).json(unread);
+// 	} catch (error) {
+// 		console.error(error);
+// 		return res.status(500).send("Internal Server Error");
+// 	}
+// });
 
 // set chat as read
 router.post("/readchat/:messagesWith", authenticate, async (req, res) => {

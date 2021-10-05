@@ -18,20 +18,21 @@ router.get("/", authenticate, async (req, res) => {
 	}
 });
 
-router.get("/unreadNo", authenticate, async (req, res) => {
-	try {
-		const { userId } = req;
-		const user = await Notification.findOne({ user: userId });
-		const len = user.notifications.filter(
-			(notification) => notification.unread === true
-		).length;
-		return res.status(200).json(len);
-	} catch (error) {
-		console.error(error);
-		return res.status(500).send("Internal Server Error");
-	}
-});
+// router.get("/unreadNo", authenticate, async (req, res) => {
+// 	try {
+// 		const { userId } = req;
+// 		const user = await Notification.findOne({ user: userId });
+// 		const len = user.notifications.filter(
+// 			(notification) => notification.unread === true
+// 		).length;
+// 		return res.status(200).json(len);
+// 	} catch (error) {
+// 		console.error(error);
+// 		return res.status(500).send("Internal Server Error");
+// 	}
+// });
 
+// to set notification to read
 router.post("/:notifyId", authenticate, async (req, res) => {
 	try {
 		const { userId } = req;

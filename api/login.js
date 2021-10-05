@@ -5,6 +5,8 @@ const isEmail = require("validator/lib/isEmail");
 const authenticateUser = require("../middlewares/authenticate");
 const User = require("../models/User");
 const Follower = require("../models/Follower");
+const Notification = require("../models/Notification");
+const Chat = require("../models/Chat");
 
 const router = express.Router();
 
@@ -14,7 +16,15 @@ router.get("/", authenticateUser, async (req, res) => {
 	try {
 		const user = await User.findById(userId);
 		const userFollowStats = await Follower.findOne({ user: userId });
-		return res.status(200).json({ user, userFollowStats });
+		const user1 = await Notification.findOne({ user: userId });
+		const len = user1.notifications.filter(
+			(notification) => notification.unread === true
+		).length;
+		const user2 = await Chat.findOne({ user: userId });
+		const unread = user2.chats.filter(
+			(chat) => chat.unread === true
+		).length;
+		return res.status(200).json({ user, userFollowStats, len, unread });
 	} catch (error) {
 		console.error(error);
 		return res.status(500).send("Internal Server Error");
