@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
