@@ -20,7 +20,7 @@ const dev = process.env.NODE_ENV !== "production";
 dev && require("dotenv").config();
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.use(express.json());
 
 connectDB();
